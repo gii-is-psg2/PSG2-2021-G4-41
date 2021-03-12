@@ -163,6 +163,22 @@
         		<picUrl>https://github.com/jesvarzam</picUrl>
       		</properties>
     	</developer>
+
+        <developer>
+      		<id>JSnow11</id>
+      		<name>José Montiel Nieves</name>
+      		<email>esoj.nieves@gmail.com</email>
+      		<url>https://github.com/JSnow11</url>
+      		<organization>PSG2-G4-41</organization>
+      		<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-41</organizationUrl>
+      		<roles>
+        		<role>developer</role>
+      		</roles>
+      		<timezone>Europe/Madrid</timezone>
+      		<properties>
+        		<picUrl>https://github.com/JSnow11</picUrl>
+      		</properties>
+    	</developer>
         
         <developer>
       		<id>guilleeF1</id>
@@ -227,7 +243,6 @@
         		<picUrl>https://github.com/miggavmar</picUrl>
       		</properties>
     	</developer>
-    	
     </developers> 
 
     <build>
