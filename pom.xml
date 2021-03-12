@@ -212,6 +212,22 @@
       		</properties>
     	</developer>
     	
+    	<developer>
+      		<id>miggavmar</id>
+      		<name>Miguel Gaviro Martínez</name>
+      		<email>miguelgaviro2000@gmail.com</email>
+      		<url>https://github.com/miggavmar</url>
+      		<organization>PSG2-G4-41</organization>
+      		<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-41</organizationUrl>
+      		<roles>
+        		<role>scrum Máster</role>
+      		</roles>
+      		<timezone>Europe/Madrid</timezone>
+      		<properties>
+        		<picUrl>https://github.com/miggavmar</picUrl>
+      		</properties>
+    	</developer>
+    	
     </developers> 
 
     <build>
