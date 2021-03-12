@@ -163,7 +163,23 @@
         		<picUrl>https://github.com/jesvarzam</picUrl>
       		</properties>
     	</developer>
-  	</developers>
+        
+        <developer>
+      		<id>guilleeF1</id>
+      		<name>Guillermo López Rosado</name>
+      		<email>guillelrosado@gmail.com</email>
+      		<url>https://github.com/guilleeF1</url>
+      		<organization>PSG2-G4-41</organization>
+      		<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-41</organizationUrl>
+      		<roles>
+        		<role>developer</role>
+      		</roles>
+      		<timezone>Europe/Madrid</timezone>
+      		<properties>
+        		<picUrl>https://github.com/guilleeF1</picUrl>
+      		</properties>
+    	</developer>
+    </developers> 
 
     <build>
         <plugins>
