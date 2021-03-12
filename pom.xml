@@ -179,6 +179,23 @@
         		<picUrl>https://github.com/guilleeF1</picUrl>
       		</properties>
     	</developer>
+    	
+    	<developer>
+      		<id>DanielDS03</id>
+      		<name>Daniel Dorante Sánchez</name>
+      		<email>dani.dorante.3@gmail.com</email>
+      		<url>https://github.com/DanielDS03</url>
+      		<organization>PSG2-G4-41</organization>
+      		<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-41</organizationUrl>
+      		<roles>
+        		<role>developer</role>
+      		</roles>
+      		<timezone>Europe/Madrid</timezone>
+      		<properties>
+        		<picUrl>https://github.com/DanielDS03</picUrl>
+      		</properties>
+    	</developer>
+    	
     </developers> 
 
     <build>
