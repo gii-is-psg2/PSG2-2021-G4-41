@@ -146,6 +146,24 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+    
+    <developers>
+    	<developer>
+      		<id>jesvarzam</id>
+      		<name>Jesus Vargas Zambrana</name>
+      		<email>jesvarzam@alum.us.es</email>
+      		<url>https://github.com/jesvarzam</url>
+      		<organization>PSG2-G4-41</organization>
+      		<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-41</organizationUrl>
+      		<roles>
+        		<role>developer</role>
+      		</roles>
+      		<timezone>Europe/Madrid</timezone>
+      		<properties>
+        		<picUrl>https://github.com/jesvarzam</picUrl>
+      		</properties>
+    	</developer>
+  	</developers>
 
     <build>
         <plugins>
