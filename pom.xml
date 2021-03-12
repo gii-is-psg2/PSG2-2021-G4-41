@@ -196,6 +196,22 @@
       		</properties>
     	</developer>
     	
+    	<developer>
+      		<id>fausto4VR</id>
+      		<name>Fausto Vázquez Rodríguez</name>
+      		<email>fausto4vazrod@gmail.com</email>
+      		<url>https://github.com/fausto4VR</url>
+      		<organization>PSG2-G4-41</organization>
+      		<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-41</organizationUrl>
+      		<roles>
+        		<role>developer</role>
+      		</roles>
+      		<timezone>Europe/Madrid</timezone>
+      		<properties>
+        		<picUrl>https://github.com/fausto4VR</picUrl>
+      		</properties>
+    	</developer>
+    	
     </developers> 
 
     <build>
