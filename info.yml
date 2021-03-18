@@ -1,0 +1,32 @@
+project:
+  name: 'PSG2-2021-G4-41'
+  owner: 'L4'
+  teamId: '41'
+  identities:
+    github:
+      url: 'https://github.com/gii-is-psg2/PSG2-2021-G4-41'
+  members:
+    member1:
+      name: 'José'
+      surname: 'Nieves' 
+      githubUsername: 'JSnow11'
+    member2:
+      name: 'Guillermo'
+      surname: 'López' 
+      githubUsername: 'guilleeF1'
+    member3:
+      name: 'Jesús'
+      surname: 'Vargas' 
+      githubUsername: 'jesvarzam'
+    member4:
+      name: 'Fausto'
+      surname: 'Vázquez' 
+      githubUsername: 'fausto4VR'
+    member5:
+      name: 'Daniel'
+      surname: 'Dorante' 
+      githubUsername: 'DanielDS03'
+    member6:
+      name: 'Miguel'
+      surname: 'Gaviro'
+      githubUsername: 'miggavmar'
