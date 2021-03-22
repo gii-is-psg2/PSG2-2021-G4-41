@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "visits")
+@Table(name = "roombookings")
 public class RoomBooking extends BaseEntity {
     /* ATTRIBUTES */
     /**
