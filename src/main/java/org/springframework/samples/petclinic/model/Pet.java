@@ -97,6 +97,13 @@ public class Pet extends NamedEntity {
 		return this.visits;
 	}
 
+	protected Set<RoomBooking> getRoomBookingsInternal() {
+		if (this.roomBookings == null) {
+			this.roomBookings = new HashSet<>();
+		}
+		return this.roomBookings;
+	}
+
 	protected void setVisitsInternal(Set<Visit> visits) {
 		this.visits = visits;
 	}
@@ -107,9 +114,20 @@ public class Pet extends NamedEntity {
 		return Collections.unmodifiableList(sortedVisits);
 	}
 
+	public List<RoomBooking> getRoomBookings() {
+		List<RoomBooking> sortedRoomBookings = new ArrayList<>(getRoomBookingsInternal());
+		PropertyComparator.sort(sortedRoomBookings, new MutableSortDefinition("checkIn", false, false));
+		return Collections.unmodifiableList(sortedRoomBookings);
+	}
+
 	public void addVisit(Visit visit) {
 		getVisitsInternal().add(visit);
 		visit.setPet(this);
+	}
+
+	public void addRoomBooking(RoomBooking roomBooking) {
+		getRoomBookingsInternal().add(roomBooking);
+		roomBooking.setPet(this);
 	}
 
 }

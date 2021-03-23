@@ -1,4 +1,5 @@
 package org.springframework.samples.petclinic.service;
+
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,12 @@ public class RoomBookingService {
 
 	@Autowired
 	private RoomBookingRepository roomBookingRP;
-	
+
 	@Transactional
 	public void saveRoom(RoomBooking r) throws IncorrectDatesException {
-		
-		if(!(r.getStartDate().isAfter(LocalDate.now()) && r.getFinishDate().isAfter(r.getStartDate()))) {
-			
+		if (!(r.getCheckIn().isAfter(LocalDate.now()) && r.getCheckOut().isAfter(r.getCheckIn()))) {
 			throw new IncorrectDatesException();
 		}
-		
 		roomBookingRP.save(r);
 	}
 
@@ -31,5 +29,4 @@ public class RoomBookingService {
 		return roomBookingRP.findAll();
 	}
 
-	
 }

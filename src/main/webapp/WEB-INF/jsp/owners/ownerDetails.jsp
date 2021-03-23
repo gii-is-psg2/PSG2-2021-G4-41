@@ -87,6 +87,9 @@
                                 <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>
                             </td>
                             <td>
+                            ||
+                            </td>
+                            <td>
                                 <spring:url value="/owners/{ownerId}/pets/{petId}/roomBookings/new" var="bookingUrl">
                                     <spring:param name="ownerId" value="${owner.id}"/>
                                     <spring:param name="petId" value="${pet.id}"/>

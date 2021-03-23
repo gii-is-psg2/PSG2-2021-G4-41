@@ -24,14 +24,15 @@ public class RoomBooking extends BaseEntity {
      */
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private LocalDate startDate;
+    private LocalDate checkIn;
     /**
      * Finish date of the booking
      */
     @Column(name = "finish_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private LocalDate finishDate;
+    private LocalDate checkOut;
 
+    /* RELATIONS */
     /**
      * Holds value of property pet.
      */
