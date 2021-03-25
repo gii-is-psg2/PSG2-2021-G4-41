@@ -13,53 +13,73 @@
  */
 @icon-font-path:    "../../webjars/bootstrap/fonts/";
 
+
+/*Colores Originales:*/
 @spring-green:      #6db33f;
 @spring-dark-green: #5fa134;
 @spring-brown:      #34302D;
 @spring-grey:       #838789;
 @spring-light-grey: #f1f1f1;
-/*Dado que no viene aquí el light red, he encontrado este por Internet*/
+
+/*Colores Añadidos:*/
+@brown-black:       #241609;
+@brown-dark:        #39240b;
+@brown-soft:        #6d441c;
+@brown-light-1:     #aa6a2c;
+@brown-light-2:     #cd853f;
+@brown-light-3:     #e8a767;
+@brown-white:       #f0e7d3;
+
+/* Usado en la parte anterior del sprint (S2.2)
 @spring-light-red:  #f5ad94;
+*/
 
 @body-bg:                           @spring-light-grey;
-@text-color:                        @spring-brown;
-@link-color:                        @spring-dark-green;
-@link-hover-color:                  @spring-dark-green;
+@text-color:                        @brown-black;
+@link-color:                        @brown-light-1;
+@link-hover-color:                  @brown-soft;
 
-@navbar-default-link-color:         @spring-light-grey;
-@navbar-default-link-active-color:  @spring-light-grey;
-@navbar-default-link-hover-color:   @spring-light-grey;
-@navbar-default-link-hover-bg:      @spring-green;
-@navbar-default-toggle-icon-bar-bg: @spring-light-grey;
+@navbar-default-link-color:         @brown-white;
+@navbar-default-link-active-color:  @brown-white;
+@navbar-default-link-hover-color:   @brown-white;
+@navbar-default-link-hover-bg:      @brown-light-3;
+@navbar-default-toggle-icon-bar-bg: @brown-white;
 @navbar-default-toggle-hover-bg:    transparent;
-/*Ahora mismo solo se pone en rojo el botón de la cabecera que esté seleccionado*/
-@navbar-default-link-active-bg:     @spring-light-red;
+@navbar-default-link-active-bg:     @brown-light-2;
 
 @border-radius-base:             0;
 @border-radius-large:            0;
 @border-radius-small:            0;
 
-@btn-default-color:              @spring-light-grey;
-@btn-default-bg:                 @spring-brown;
-@btn-default-border:             @spring-green;
+@btn-default-color:              @brown-white;
+@btn-default-bg:                 @brown-light-2;
+@btn-default-border:             @brown-soft;
 
-@nav-tabs-active-link-hover-color:        @spring-light-grey;
-@nav-tabs-active-link-hover-bg:           @spring-brown;
-@nav-tabs-active-link-hover-border-color: @spring-brown;
-@nav-tabs-border-color:                   @spring-brown;
+@nav-tabs-active-link-hover-color:        @brown-light-2;
+@nav-tabs-active-link-hover-bg:           @brown-dark;
+@nav-tabs-active-link-hover-border-color: @brown-dark;
+@nav-tabs-border-color:                   @brown-dark;
 
-@pagination-active-bg:                    @spring-brown;
-@pagination-active-border:                @spring-green;
-@table-border-color:                      @spring-brown;
+@pagination-active-bg:                    @brown-dark;
+@pagination-active-border:                @brown-dark;
+@table-border-color:                      @brown-dark;
+
+.tbody{
+  background-color: @brown-light-3;
+}
 
 .table > thead > tr > th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
+  border-top-left-radius: 20px 20px;
+  border-top-right-radius: 20px 20px;
+  background-color: lighten(@brown-light-3, 3%);
+  color: @brown-dark;
 }
 
 .table-owner > thead > tr > th {
-  background-color: @spring-light-grey;
-  color: @spring-brown;
+  border-top-left-radius: 20px 20px;
+  border-top-right-radius: 20px 20px;
+  background-color: @brown-light-3;
+  color: @brown-dark;
 }
 
 .table-filter {
@@ -73,6 +93,10 @@
 
 .btn-default {
   border-width: 2px;
+  border-top-left-radius: 20px 20px;
+  border-top-right-radius: 20px 20px;
+  border-bottom-left-radius: 20px 20px;
+  border-bottom-right-radius: 20px 20px;
   transition: border 0.15s;
   -webkit-transition: border 0.15s;
   -moz-transition: border 0.15s;
@@ -84,8 +108,8 @@
   &:active,
   &.active,
   .open .dropdown-toggle& {
-    background-color: @spring-brown;
-    border-color: @spring-brown;
+    background-color: @brown-black;
+    border-color: @brown-soft;
   }
 }
 
