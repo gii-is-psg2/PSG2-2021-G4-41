@@ -40,5 +40,19 @@ public class RoomBookingServiceTests {
 		assertTrue(roomBookingService.findAll().size()>0);
 
 	}
+	
+	@Test
+	void shouldNotInsertRoomWithIncorrectDates() throws IncorrectDatesException {
+		
+		RoomBooking r = new RoomBooking();
+		Pet p = petService.findPetById(1);
+		
+		r.setCheckIn(LocalDate.now().minusDays(2));
+		r.setCheckOut(LocalDate.now().plusDays(5));
+		r.setPet(p);
+		
+		assertThrows(IncorrectDatesException.class, () -> roomBookingService.saveRoom(r));
+
+	}
 
 }
