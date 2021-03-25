@@ -26,10 +26,10 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${vet['new']}">
-                    <button class="btn btn-default" type="submit">Add</button>
+                    <button class="btn btn-default" type="submit">Save</button>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-default" type="submit">Add</button>
+						<button class="btn btn-default" type="submit">Save</button>
 					</c:otherwise>
                 </c:choose>
             </div>

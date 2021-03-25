@@ -40,18 +40,19 @@ import javax.validation.Valid;
 @Controller
 public class VetController {
 
-	private final VetService vetService;
 	private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
-
+	
+	private final VetService vetService;
+	
 	@Autowired
 	public VetController(VetService vetService) {
 		this.vetService = vetService;
 	}
 	
-//	@ModelAttribute("specialties")
-//    public Collection<Specialty> populateSpecialities() {
-//        return this.vetService.findVetSpecialities();
-//    }
+	@ModelAttribute("specialties")
+    public Collection<Specialty> populateSpecialities() {
+        return this.vetService.getVetSpecialities();
+    }
 
 	@GetMapping(value = { "/vets" })
 	public String showVetList(Map<String, Object> model) {
