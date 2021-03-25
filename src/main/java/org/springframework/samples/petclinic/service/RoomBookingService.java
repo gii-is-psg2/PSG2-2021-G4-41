@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,8 +26,8 @@ public class RoomBookingService {
 	}
 
 	@Transactional
-	public Iterable<RoomBooking> findAll() throws DataAccessException {
-		return roomBookingRP.findAll();
+	public List<RoomBooking> findAll() throws DataAccessException {
+		return (List<RoomBooking>) roomBookingRP.findAll();
 	}
 
 }
