@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.service;
+
 import java.util.Collection;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.VetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import antlr.collections.List;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -35,31 +38,29 @@ public class VetService {
 
 	private VetRepository vetRepository;
 
-
 	@Autowired
 	public VetService(VetRepository vetRepository) {
 		this.vetRepository = vetRepository;
-	}		
-	
+	}
+
 	@Transactional
 	public void saveVet(Vet vet) throws DataAccessException {
 		vetRepository.save(vet);
 	}
 
-	@Transactional(readOnly = true)	
+	@Transactional(readOnly = true)
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
-	}	
-	
+	}
 
-    @Transactional(readOnly = true)
-	public Optional<Vet> findVetById(int id)  {
+	@Transactional(readOnly = true)
+	public Optional<Vet> findVetById(int id) {
 		return vetRepository.findById(id);
 	}
-    
-//    @Transactional(readOnly = true)
-//	public Collection<Specialty> findVetSpecialities()  {
-//		return vetRepository.findVetSpecialities();
-//	}
+
+	@Transactional(readOnly = true)
+	public Collection<Specialty> getVetSpecialities() {
+		return vetRepository.getVetSpecialities();
+	}
 
 }
