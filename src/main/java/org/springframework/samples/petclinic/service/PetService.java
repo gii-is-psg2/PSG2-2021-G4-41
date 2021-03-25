@@ -16,9 +16,13 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
@@ -78,5 +82,14 @@ public class PetService {
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
 	}
+	
+	@Transactional
+	public void delete(Pet pet) {
+		pet.setType(null);
+		Owner owner = pet.getOwner();
+		owner.removePet(pet);
+		petRepository.delete(pet);
+	}
+	
 
 }
