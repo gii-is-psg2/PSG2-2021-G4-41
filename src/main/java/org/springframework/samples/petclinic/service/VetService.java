@@ -17,6 +17,8 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Specialty;
@@ -60,7 +62,8 @@ public class VetService {
 
 	@Transactional(readOnly = true)
 	public Collection<Specialty> getVetSpecialities() {
-		return vetRepository.getVetSpecialities();
+		return this.vetRepository.findAll().stream().map(x -> x.getSpecialties())
+				.flatMap(specialities -> specialities.stream()).collect(Collectors.toSet());
 	}
 
 }

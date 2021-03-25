@@ -42,7 +42,4 @@ public interface VetRepository extends CrudRepository<Vet, Integer> {
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
 	Collection<Vet> findAll() throws DataAccessException;
-
-	@Query("SELECT DISTINCT vet.speciality FROM Vet vet")
-	List<Specialty> getVetSpecialities() throws DataAccessException;
 }
