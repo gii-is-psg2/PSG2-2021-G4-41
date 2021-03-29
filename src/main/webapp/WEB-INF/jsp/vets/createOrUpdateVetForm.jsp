@@ -14,11 +14,11 @@
         <div class="form-group has-feedback">
 			<petclinic:inputField label="Name" name="firstName"/>
 			<petclinic:inputField label="LastName" name="lastName"/>
-			<label for="specialty">Specialty:</label> <select
+			<label for="specialties">Specialty:</label> <select multiple
 				name="specialties" id="specialties">
 				<c:forEach items="${specialties}" var="specialties">
-					<option value="${specialties}"><c:out
-							value="${specialties}" /></option>
+					<option value="${specialties.id}"><c:out
+							value="${specialties.name}" /></option>
 				</c:forEach>
 				</select>
         </div>

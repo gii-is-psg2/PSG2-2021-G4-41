@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.web;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
@@ -40,42 +41,44 @@ import javax.validation.Valid;
 @Controller
 public class VetController {
 
-	private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
-	
-	private final VetService vetService;
-	
-	@Autowired
-	public VetController(VetService vetService) {
-		this.vetService = vetService;
-	}
-	
-	@ModelAttribute("specialties")
+    private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
+
+    private final VetService vetService;
+
+    @Autowired
+    public VetController(VetService vetService) {
+        this.vetService = vetService;
+    }
+
+    @ModelAttribute("specialties")
     public Collection<Specialty> populateSpecialities() {
         return this.vetService.getVetSpecialities();
     }
 
-	@GetMapping(value = { "/vets" })
-	public String showVetList(Map<String, Object> model) {
-		// Here we are returning an object of type 'Vets' rather than a collection of Vet
-		// objects
-		// so it is simpler for Object-Xml mapping
-		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vetService.findVets());
-		model.put("vets", vets);
-		return "vets/vetList";
-	}
+    @GetMapping(value = { "/vets" })
+    public String showVetList(Map<String, Object> model) {
+        // Here we are returning an object of type 'Vets' rather than a collection of
+        // Vet
+        // objects
+        // so it is simpler for Object-Xml mapping
+        Vets vets = new Vets();
+        vets.getVetList().addAll(this.vetService.findVets());
+        model.put("vets", vets);
+        return "vets/vetList";
+    }
 
-	@GetMapping(value = { "/vets.xml"})
-	public @ResponseBody Vets showResourcesVetList() {
-		// Here we are returning an object of type 'Vets' rather than a collection of Vet
-		// objects
-		// so it is simpler for JSon/Object mapping
-		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vetService.findVets());
-		return vets;
-	}
-	
-	@GetMapping(value = "/vets/new")
+    @GetMapping(value = { "/vets.xml" })
+    public @ResponseBody Vets showResourcesVetList() {
+        // Here we are returning an object of type 'Vets' rather than a collection of
+        // Vet
+        // objects
+        // so it is simpler for JSon/Object mapping
+        Vets vets = new Vets();
+        vets.getVetList().addAll(this.vetService.findVets());
+        return vets;
+    }
+
+    @GetMapping(value = "/vets/new")
     public String initCreationForm(Map<String, Object> model) {
         Vet vet = new Vet();
         model.put("vet", vet);
@@ -91,7 +94,7 @@ public class VetController {
             return "redirect:/vets";
         }
     }
-    
+
     @GetMapping(value = "/vets/{vetId}/edit")
     public String initUpdateVetForm(@PathVariable("vetId") int vetId, Model model) {
         Vet vet = this.vetService.findVetById(vetId).get();

@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.samples.petclinic.repository.SpecialtiesRepository;
 import org.springframework.samples.petclinic.repository.VetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,14 +38,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class VetService {
 
 	private VetRepository vetRepository;
+	private SpecialtiesRepository specialtyRepository;
 
 	@Autowired
-	public VetService(VetRepository vetRepository) {
+	public VetService(VetRepository vetRepository, SpecialtiesRepository specialtyRepository) {
 		this.vetRepository = vetRepository;
+		this.specialtyRepository = specialtyRepository;
 	}
 
 	@Transactional
 	public void saveVet(Vet vet) throws DataAccessException {
+		if (vet.getSpecialtiesIdList() != null)
+			vet.getSpecialtiesIdList().forEach(specialtyId -> {
+				Specialty specialty = specialtyRepository.findById(specialtyId);
+				if (specialty != null)
+					vet.addSpecialty(specialty);
+			});
 		vetRepository.save(vet);
 	}
 
