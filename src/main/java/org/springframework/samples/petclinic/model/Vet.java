@@ -84,7 +84,7 @@ public class Vet extends Person {
 	}
 
 	public void addSpecialtyById(Integer specialty) {
-		return null;
+		return;
 	}
 
 }

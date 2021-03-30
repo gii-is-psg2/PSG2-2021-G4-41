@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.web;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -77,6 +76,13 @@ public class VetController {
         vets.getVetList().addAll(this.vetService.findVets());
         return vets;
     }
+    
+    @GetMapping(value = { "/vet/{vetId}" })
+	public String findVetById(@PathVariable("vetId") int vetId, ModelMap model) {
+		Vet vet = this.vetService.findVetById(vetId);
+		model.put("vet", vet);
+		return "vets/vetsDetails";
+	}
 
     @GetMapping(value = "/vets/new")
     public String initCreationForm(Map<String, Object> model) {
@@ -96,15 +102,16 @@ public class VetController {
     }
 
     @GetMapping(value = "/vets/{vetId}/edit")
-    public String initUpdateVetForm(@PathVariable("vetId") int vetId, Model model) {
-        Vet vet = this.vetService.findVetById(vetId).get();
-        model.addAttribute(vet);
+    public String initUpdateVetForm(@PathVariable("vetId") int vetId, ModelMap model) {
+        Vet vet = vetService.findVetById(vetId);
+        model.put("vet",vet);
         return VIEWS_VET_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping(value = "/vets/{vetId}/edit")
-    public String processUpdateVetForm(@Valid Vet vet, BindingResult result, @PathVariable("vetId") int vetId) {
+    public String processUpdateVetForm(@Valid Vet vet, BindingResult result, @PathVariable("vetId") int vetId, ModelMap model) {
         if (result.hasErrors()) {
+        	model.put("vet",vet);
             return VIEWS_VET_CREATE_OR_UPDATE_FORM;
         } else {
             vet.setId(vetId);
