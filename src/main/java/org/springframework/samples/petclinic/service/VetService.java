@@ -1,5 +1,4 @@
-/*
- * Copyright 2002-2013 the original author or authors.
+/* Copyright 2002-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +13,8 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.service;
-
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Specialty;
@@ -34,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Michael Isvy
  */
+
 @Service
 public class VetService {
 
@@ -63,8 +60,8 @@ public class VetService {
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<Vet> findVetById(int id) {
-		return vetRepository.findById(id);
+	public Vet findVetById(Integer id) throws DataAccessException {
+		return vetRepository.findById(id).get();
 	}
 
 	@Transactional(readOnly = true)
@@ -72,5 +69,4 @@ public class VetService {
 		return this.vetRepository.findAll().stream().map(x -> x.getSpecialties())
 				.flatMap(specialities -> specialities.stream()).collect(Collectors.toSet());
 	}
-
 }
