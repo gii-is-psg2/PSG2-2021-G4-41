@@ -1,5 +1,4 @@
-/*
- * Copyright 2002-2013 the original author or authors.
+/* Copyright 2002-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +13,16 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.service;
-
 import java.util.Collection;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.repository.OwnerRepository;
-import org.springframework.samples.petclinic.repository.PetRepository;
+import org.springframework.samples.petclinic.repository.SpecialtiesRepository;
 import org.springframework.samples.petclinic.repository.VetRepository;
-import org.springframework.samples.petclinic.repository.VisitRepository;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -40,20 +30,43 @@ import org.springframework.util.StringUtils;
  *
  * @author Michael Isvy
  */
+
 @Service
 public class VetService {
 
 	private VetRepository vetRepository;
-
+	private SpecialtiesRepository specialtyRepository;
 
 	@Autowired
-	public VetService(VetRepository vetRepository) {
+	public VetService(VetRepository vetRepository, SpecialtiesRepository specialtyRepository) {
 		this.vetRepository = vetRepository;
-	}		
+		this.specialtyRepository = specialtyRepository;
+	}
 
-	@Transactional(readOnly = true)	
+	@Transactional
+	public void saveVet(Vet vet) throws DataAccessException {
+		if (vet.getSpecialtiesIdList() != null)
+			vet.getSpecialtiesIdList().forEach(specialtyId -> {
+				Specialty specialty = specialtyRepository.findById(specialtyId);
+				if (specialty != null)
+					vet.addSpecialty(specialty);
+			});
+		vetRepository.save(vet);
+	}
+
+	@Transactional(readOnly = true)
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
-	}	
+	}
 
+	@Transactional(readOnly = true)
+	public Vet findVetById(Integer id) throws DataAccessException {
+		return vetRepository.findById(id).get();
+	}
+
+	@Transactional(readOnly = true)
+	public Collection<Specialty> getVetSpecialities() {
+		return this.vetRepository.findAll().stream().map(x -> x.getSpecialties())
+				.flatMap(specialities -> specialities.stream()).collect(Collectors.toSet());
+	}
 }
