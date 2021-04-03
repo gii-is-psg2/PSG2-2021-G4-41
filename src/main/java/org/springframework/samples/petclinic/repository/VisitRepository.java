@@ -16,10 +16,13 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 
 /**
@@ -42,6 +45,9 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 	 */
 	void save(Visit visit) throws DataAccessException;
 
-	List<Visit> findByPetId(Integer petId);
-
+	List<Visit> findByPetId(Integer petId) throws DataAccessException;
+	
+	Visit findById(Integer id) throws DataAccessException;
+	
+	void delete(Visit visit) throws DataAccessException;
 }

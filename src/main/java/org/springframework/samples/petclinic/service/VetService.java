@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.service;
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,11 @@ public class VetService {
 	@Transactional(readOnly = true)
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
+	}
+
+	@Transactional
+	public void delete(Vet vet) {
+		vetRepository.delete(vet);
 	}
 
 	@Transactional(readOnly = true)

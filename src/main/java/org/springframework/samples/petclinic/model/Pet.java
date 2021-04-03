@@ -60,7 +60,7 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
@@ -112,6 +112,10 @@ public class Pet extends NamedEntity {
 		List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
 		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
 		return Collections.unmodifiableList(sortedVisits);
+	}
+	
+	public void setVisits(Set<Visit> visits) {
+		this.visits = visits;
 	}
 
 	public List<RoomBooking> getRoomBookings() {

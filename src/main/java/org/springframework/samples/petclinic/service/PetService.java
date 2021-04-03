@@ -15,11 +15,11 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.RoomBooking;
@@ -28,7 +28,6 @@ import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.RoomBookingRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
-import org.springframework.samples.petclinic.service.exceptions.IncorrectDatesException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -86,6 +85,24 @@ public class PetService {
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
+	}
+
+	@Transactional(readOnly = true)
+	public Visit findVisitById(int id) throws DataAccessException {
+		return visitRepository.findById(id);
+	}
+
+	@Transactional
+	public void delete(Pet pet) {
+		pet.setType(null);
+		Owner owner = pet.getOwner();
+		owner.removePet(pet);
+		petRepository.delete(pet);
+	}
+
+	@Transactional
+	public void deleteVisit(Visit visit) {
+		visitRepository.delete(visit);
 	}
 
 }
