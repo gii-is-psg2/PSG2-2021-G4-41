@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -87,6 +88,13 @@ class VetServiceTests {
 		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
 		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
 		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+	}
+	
+	@Test
+	@Transactional
+	void shouldDelete() {
+		this.vetService.delete(this.vetService.findVetById(1));
+		assertThrows(NullPointerException.class, () -> this.vetService.findVetById(1).getFirstName());
 	}
 
 

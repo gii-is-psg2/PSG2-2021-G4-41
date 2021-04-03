@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -222,6 +223,25 @@ class PetServiceTests {
 		assertThat(visitArr[0].getPet()).isNotNull();
 		assertThat(visitArr[0].getDate()).isNotNull();
 		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
+	}
+	
+	@Test
+	@Transactional
+	void shouldDeleteVisit() {
+		Visit visit = new Visit();
+		visit.setDescription("Descripcion");
+		visit.setPet(this.petService.findPetById(1));
+		visit.setDate(LocalDate.now());
+		this.petService.saveVisit(visit);
+		this.petService.deleteVisit(this.petService.findVisitById(visit.getId()));
+		assertThrows(NullPointerException.class, () -> this.petService.findVisitById(visit.getId()).getPet());
+	}
+	
+	@Test
+	@Transactional
+	void shouldDelete() {
+		this.petService.delete(this.petService.findPetById(1));
+		assertThrows(NullPointerException.class, () -> this.petService.findPetById(1).getName());
 	}
 
 }
