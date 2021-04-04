@@ -44,13 +44,36 @@ public class RoomBookingController {
 		return "pets/createRoomBookingForm";
 	}
 
+//	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
+//	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
+//		if (result.hasErrors() || !(r.getCheckOut().isAfter(r.getCheckIn()))) {
+//			result.rejectValue("checkOut", "error.IncorrectCheckOut", "La fecha de fin debe ser posterior a la fecha de inicio");
+//			return "pets/createRoomBookingForm";
+//		} else {
+//			this.petService.saveRoomBooking(r);
+//		}
+//
+//		return "redirect:/owners/{ownerId}";
+//	}
+	
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	public String processNewVisitForm(@Valid RoomBooking roomBooking, BindingResult result) {
-		if (result.hasErrors() || !(roomBooking.getCheckOut().isAfter(roomBooking.getCheckIn()))) {
-			result.rejectValue("checkOut", "error.IncorrectCheckOut", "La fecha de fin debe ser posterior a la fecha de inicio");
+	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
+		
+		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
+		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
+		
+		if (c1 && c2) {
+			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
+			result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out's date must be after check out's date");
+			return "pets/createRoomBookingForm";
+		} else if(!c1 && c2) {
+			result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out's date must be after check out's date");
+			return "pets/createRoomBookingForm";
+		} else if(c1 && !c2) {
+			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
 			return "pets/createRoomBookingForm";
 		} else {
-			this.petService.saveRoomBooking(roomBooking);
+			this.petService.saveRoomBooking(r);
 		}
 
 		return "redirect:/owners/{ownerId}";

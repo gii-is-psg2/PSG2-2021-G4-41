@@ -25,7 +25,6 @@ public class RoomBooking extends BaseEntity {
      */
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @Future
     private LocalDate checkIn;
     /**
      * Finish date of the booking
