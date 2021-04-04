@@ -46,8 +46,8 @@ public class RoomBookingController {
 
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
 	public String processNewVisitForm(@Valid RoomBooking roomBooking, BindingResult result) {
-		if (result.hasErrors() || !(roomBooking.getCheckIn().isAfter(LocalDate.now())
-				&& roomBooking.getCheckOut().isAfter(roomBooking.getCheckIn()))) {
+		if (result.hasErrors() || !(roomBooking.getCheckOut().isAfter(roomBooking.getCheckIn()))) {
+			result.rejectValue("checkOut", "error.IncorrectCheckOut", "La fecha de fin debe ser posterior a la fecha de inicio");
 			return "pets/createRoomBookingForm";
 		} else {
 			this.petService.saveRoomBooking(roomBooking);

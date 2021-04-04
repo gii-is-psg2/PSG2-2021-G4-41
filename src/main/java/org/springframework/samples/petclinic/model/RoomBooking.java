@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +25,7 @@ public class RoomBooking extends BaseEntity {
      */
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Future
     private LocalDate checkIn;
     /**
      * Finish date of the booking
