@@ -80,7 +80,6 @@ public class OwnerService {
 	public void delete(Owner owner) {
 		owner.setUser(null);
 		ownerRepository.delete(owner);
-
 	}
 
 }
