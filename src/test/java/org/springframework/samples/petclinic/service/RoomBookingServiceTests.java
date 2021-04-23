@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.RoomBooking;
+import org.springframework.samples.petclinic.service.exceptions.ConcurrentBookingException;
 import org.springframework.samples.petclinic.service.exceptions.IncorrectDatesException;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class RoomBookingServiceTests {
 	protected RoomBookingService roomBookingService;
 	
 	@Test
-	void shouldInsertRoom() throws IncorrectDatesException {
+	void shouldInsertRoom() throws IncorrectDatesException, ConcurrentBookingException {
 		
 		RoomBooking r = new RoomBooking();
 		Pet p = petService.findPetById(1);
