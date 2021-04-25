@@ -62,8 +62,8 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO causes(id,name,description,target,organization) VALUES (1,'Dogs shelter','Donate for making possible to build a dog´s shelter',1000,'ETSII');
-INSERT INTO causes(id,name,description,target,organization) VALUES (2,'Cats shelter','Donate for making possible to build a cat´s shelter',1000,'US');
+INSERT INTO causes(id,name,description,target,organization,open) VALUES (1,'Dogs shelter','Donate for making possible to build a dog´s shelter',1000,'ETSII',true);
+INSERT INTO causes(id,name,description,target,organization,open) VALUES (2,'Cats shelter','Donate for making possible to build a cat´s shelter',1000,'US',true);
 
 INSERT INTO users(username,password,enabled) VALUES ('jesvarzam','1234',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'jesvarzam','owner');

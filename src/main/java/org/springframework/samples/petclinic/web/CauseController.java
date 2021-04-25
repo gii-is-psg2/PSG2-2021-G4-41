@@ -55,6 +55,7 @@ public class CauseController {
 			return "causes/newCauseForm";
 		}
 		else {
+			c.setOpen(true);
 			causeService.saveCause(c);
 			m.addAttribute("message", "Cause created correctly");
 			return causesList(m);
@@ -71,7 +72,7 @@ public class CauseController {
 		return "/causes/newDonation";
 	}
 	
-	@PostMapping(value = "/causes/{causeId}/donate")
+	@PostMapping(value = "/causes/{causeId}/newDonation")
 	public String saveDonation(@PathVariable("causeId") int id, @Valid Donation d, BindingResult r, ModelMap m) {
 		
 		if(r.hasErrors()) {
@@ -79,9 +80,10 @@ public class CauseController {
 			return initDonation(id, m);
 		}
 		else {
+			d.setCause(causeService.findCauseById(id).get());
 			causeService.saveDonation(d);
 			m.addAttribute("message", "Donation made correctly");
-			return causesList(m);
+			return "redirect:/causes";
 		}
 	}
 	

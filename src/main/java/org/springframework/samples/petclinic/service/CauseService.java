@@ -52,7 +52,7 @@ public class CauseService {
 		Integer donated = findBudgetTarget(donation.getCause().getId()) + donation.getAmount();
 		Integer target = donation.getCause().getTarget();
 		if(donated>=target) {
-			causeRepository.delete(donation.getCause());
+			donation.getCause().setOpen(false);
 		}
 		donationRepository.save(donation);
 	}

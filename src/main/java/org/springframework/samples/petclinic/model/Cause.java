@@ -41,6 +41,8 @@ public class Cause extends BaseEntity {
 	@Column(name = "organization")
 	private String organization;
 	
+	private Boolean open;
+	
 	//	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cause")
 	private Set<Donation> donations;
@@ -107,6 +109,13 @@ public class Cause extends BaseEntity {
 	}
 	public void setDonated(Integer donated) {
 		this.donated = donated;
+	}
+	
+	public Boolean getOpen() {
+		return this.open;
+	}
+	public void setOpen(Boolean open) {
+		this.open = open;
 	}
 
 }

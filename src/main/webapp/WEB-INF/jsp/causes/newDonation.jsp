@@ -9,7 +9,7 @@
     
     <jsp:body>
     
-    	 <form:form action="/causes/{causeId}/donate" modelAttribute="donation" class="form-horizontal">
+    	 <form:form modelAttribute="donation" class="form-horizontal">
     	
         <h2>Donation for <c:out value="${donation.cause.name}"/> cause</h2>
             <div class="form-group has-feedback">
@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <input type="hidden" name="id" value="${donation.cause.id}"/>
+                    <input type="hidden" name="causeId" value="${donation.cause.id}"/>
                     <button class="btn btn-default" type="submit">Submit donation</button>
                 </div>
             </div>
