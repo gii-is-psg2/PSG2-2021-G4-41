@@ -12,12 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 
 @Entity
-@Table(name = "cause")
+@Table(name = "causes")
 public class Cause extends BaseEntity {
 
 	@NotEmpty
@@ -28,17 +30,16 @@ public class Cause extends BaseEntity {
 	@Column(name = "description")
 	private String description;
 	
-	@NotEmpty
+	@NotNull
 	@Column(name = "target")
+	@Range(min = 500, max = 5000)
 	private Integer target;
+
+	private Integer donated;
 	
 	@NotEmpty
 	@Column(name = "organization")
 	private String organization;
-	
-	@NotEmpty
-	@Column(name = "is_open")
-	private Boolean isOpen;
 	
 	//	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cause")
@@ -76,13 +77,6 @@ public class Cause extends BaseEntity {
 		this.organization = organization;
 	}
 	
-	public Boolean getIsOpen() {
-		return this.isOpen;
-	}
-	public void setIsOpen(Boolean isOpen) {
-		this.isOpen = isOpen;
-	}
-	
 	//	
 	
 	protected Set<Donation> getDonationsInternal() {
@@ -101,6 +95,18 @@ public class Cause extends BaseEntity {
 	}
 	public void setDonations(List<Donation> donations) {
 		setDonationsInternal(new HashSet<>(donations));
+	}
+	
+	public Integer getDonated() {
+		List<Donation> donations = getDonations();
+		Integer amount = 0;
+		for(Donation d: donations) {
+			amount+=d.getAmount();
+		}
+		return amount;
+	}
+	public void setDonated(Integer donated) {
+		this.donated = donated;
 	}
 
 }
