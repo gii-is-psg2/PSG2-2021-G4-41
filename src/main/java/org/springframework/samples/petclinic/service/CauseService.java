@@ -8,6 +8,8 @@ import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
 import org.springframework.samples.petclinic.repository.CauseRepository;
 import org.springframework.samples.petclinic.repository.DonationRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,18 +51,20 @@ public class CauseService {
 	@Transactional
 	public void saveDonation(Donation donation) throws DataAccessException {
 		
-		Integer donated = findBudgetTarget(donation.getCause().getId()) + donation.getAmount();
-		Integer target = donation.getCause().getTarget();
+		Double donated = findBudgetTarget(donation.getCause().getId()) + donation.getAmount();
+		Double target = donation.getCause().getTarget();
 		if(donated>=target) {
-			donation.getCause().setOpen(false);
+			//donation.getCause().setOpen(false);
+			causeRepository.findById(donation.getCause().getId()).get().setOpen(false);
 		}
+		
 		donationRepository.save(donation);
 	}
 	
 	@Transactional(readOnly = true)
-	public Integer findBudgetTarget(int id) throws DataAccessException {
+	public Double findBudgetTarget(int id) throws DataAccessException {
 		List<Donation> donations = causeRepository.findById(id).get().getDonations();
-		Integer target = 0;
+		Double target = 0.;
 		for(Donation d: donations) {
 			target = target + d.getAmount();
 		}

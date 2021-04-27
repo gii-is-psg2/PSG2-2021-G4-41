@@ -44,6 +44,11 @@
                     <a href="${fn:escapeXml(causeUrl)}">Donate for this cause</a>
                 </td>
                 </c:if>
+                <td>
+                <c:if test="${cause.open == 'false'}">
+                	<p>Cause closed</p>
+                </c:if>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

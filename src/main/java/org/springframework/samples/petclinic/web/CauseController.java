@@ -1,13 +1,16 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.CauseService;
+import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -20,6 +23,9 @@ public class CauseController {
 	
 	@Autowired
 	private CauseService causeService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping(value = "/causes")
 	public String causesList(ModelMap m) {
@@ -35,7 +41,7 @@ public class CauseController {
 	public String causeDetails(ModelMap m, @PathVariable("causeId") int id) {
 		
 		Optional<Cause> cause = causeService.findCauseById(id);
-		Integer donated = causeService.findBudgetTarget(id);
+		Double donated = causeService.findBudgetTarget(id);
 		m.addAttribute("cause", cause.get());
 		m.addAttribute("donated", donated);
 		return "causes/causeDetails";
@@ -51,7 +57,6 @@ public class CauseController {
 	public String saveNewCause(@Valid Cause c, BindingResult r, ModelMap m) {
 		
 		if(r.hasErrors()) {
-			m.addAttribute("cause", new Cause());
 			return "causes/newCauseForm";
 		}
 		else {
@@ -62,30 +67,60 @@ public class CauseController {
 		}
 	}
 	
+//	@GetMapping(value= "/causes/{causeId}/newDonation")
+//	public String initDonation(@PathVariable("causeId") int id, ModelMap m) {
+//		
+//		Donation d = new Donation();
+//		d.setCause(causeService.findCauseById(id).get());
+//		m.addAttribute("donation", d);
+//		return "/causes/newDonation";
+//	}
+//	
+//	@PostMapping(value = "/causes/{causeId}/newDonation")
+//	public String saveDonation(@PathVariable("causeId") int id, @Valid Donation d, BindingResult r, ModelMap m) {
+//		
+//		if(r.hasErrors()) {
+//			r.rejectValue("amount", "error.IncorrectAmount", "The donated amount must be at least 1 €");
+//			m.addAttribute("donation", new Donation());
+//			return initDonation(id, m);
+//		}
+//		else {
+//			d.setCause(causeService.findCauseById(id).get());
+//			d.setDate(LocalDate.now());
+//			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//	        String username = authentication.getName();
+//	        User user = userService.findUser(username).get();
+//	        d.setUser(user);
+//			causeService.saveDonation(d);
+//			m.addAttribute("message", "Donation made correctly");
+//			return "redirect:/causes";
+//		}
+//	}
+//	
+	
 	@GetMapping(value= "/causes/{causeId}/newDonation")
 	public String initDonation(@PathVariable("causeId") int id, ModelMap m) {
-		
 		Donation d = new Donation();
-		d.setCause(causeService.findCauseById(id).get());
-//		m.addAttribute("cause", causeService.findCauseById(id).get());
 		m.addAttribute("donation", d);
-		return "/causes/newDonation";
+		return "causes/newDonation";
 	}
 	
 	@PostMapping(value = "/causes/{causeId}/newDonation")
 	public String saveDonation(@PathVariable("causeId") int id, @Valid Donation d, BindingResult r, ModelMap m) {
 		
 		if(r.hasErrors()) {
-			m.addAttribute("donation", new Donation());
-			return initDonation(id, m);
+			return "causes/newDonation";
 		}
 		else {
 			d.setCause(causeService.findCauseById(id).get());
+			d.setDate(LocalDate.now());
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	        String username = authentication.getName();
+	        User user = userService.findUser(username).get();
+	        d.setUser(user);
 			causeService.saveDonation(d);
 			m.addAttribute("message", "Donation made correctly");
 			return "redirect:/causes";
 		}
 	}
-	
-
 }

@@ -34,21 +34,23 @@
     
     <h3>Donations for this cause</h3>
     
-    <table class = "table table-striped">
-    	<c:forEach var="donation" items="${cause.donations}">
-    	<h4><c:out value="Donation made by ${donation.user.username}"/></h4>
-    		<tr>
-    			<th>Donation date</th>
-       	 		<td><petclinic:localDate date="${donation.date}" pattern="yyyy-MM-dd"/></td>
-       	 	</tr>
-       	 	<tr>
-       	 		<th>Amount donated</th>
-                <td><c:out value="${donation.amount}"/></td>
-               	<!-- <td></td> -->
-            </tr>
-    	
-    	</c:forEach>
     
-    </table>
+    <c:forEach var="donation" items="${cause.donations}">
+    	<table class = "table table-striped">
+    		<h4><c:out value="Donation made by ${donation.user.username}"/></h4>
+    			<tr>
+    				<th>Donation date</th>
+       	 			<td><petclinic:localDate date="${donation.date}" pattern="yyyy-MM-dd"/></td>
+       	 		</tr>
+       	 		<tr>
+       	 			<th>Amount donated</th>
+                	<td><c:out value="${donation.amount}"/></td>
+               		<!-- <td></td> -->
+            	</tr>
+    	
+    	
+    
+    	</table>
+    </c:forEach>
 
 </petclinic:layout>

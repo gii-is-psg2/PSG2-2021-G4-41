@@ -8,7 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -16,8 +18,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Donation extends BaseEntity {
 
 	@NotNull
+	@Positive
 	@Column(name = "amount")
-	private Integer amount;
+	private Double amount;
 	
 	@Column(name = "donation_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -33,10 +36,10 @@ public class Donation extends BaseEntity {
 	
 	//
 	
-	public Integer getAmount() {
+	public Double getAmount() {
 		return this.amount;
 	}
-	public void setAmount(Integer amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	

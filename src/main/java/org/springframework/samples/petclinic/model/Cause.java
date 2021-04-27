@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.support.MutableSortDefinition;
@@ -31,11 +32,12 @@ public class Cause extends BaseEntity {
 	private String description;
 	
 	@NotNull
+	@Positive
 	@Column(name = "target")
 	@Range(min = 500, max = 5000)
-	private Integer target;
+	private Double target;
 
-	private Integer donated;
+	private Double donated;
 	
 	@NotEmpty
 	@Column(name = "organization")
@@ -64,10 +66,10 @@ public class Cause extends BaseEntity {
 	}
 	
 	
-	public Integer getTarget() {
+	public Double getTarget() {
 		return this.target;
 	}
-	public void setTarget(Integer target) {
+	public void setTarget(Double target) {
 		this.target = target;
 	}
 	
@@ -99,15 +101,15 @@ public class Cause extends BaseEntity {
 		setDonationsInternal(new HashSet<>(donations));
 	}
 	
-	public Integer getDonated() {
+	public Double getDonated() {
 		List<Donation> donations = getDonations();
-		Integer amount = 0;
+		Double amount = 0.;
 		for(Donation d: donations) {
 			amount+=d.getAmount();
 		}
 		return amount;
 	}
-	public void setDonated(Integer donated) {
+	public void setDonated(Double donated) {
 		this.donated = donated;
 	}
 	
