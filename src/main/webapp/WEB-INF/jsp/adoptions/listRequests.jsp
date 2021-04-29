@@ -23,40 +23,33 @@
     <table id="requestsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Owner Name</th>
-            
-            <%-- COMPLETAR
-            <th>Specialties</th>
-            <th>Delete</th>
-            <th>Edit</th>/ --%>
+            <th>Pet Name</th>
+            <th>Type</th>
+            <th>Birth Date</th>
+            <th>Location</th>
+            <th>Owner</th>
+            <th>Apply</th>
+     
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${request.adoptionRequestList}" var="request">
+        <c:forEach items="${requests}" var="request">
             <tr>
                 <td>
-                    <c:out value="${request.firstName} ${request.lastName}"/>
-                </td>
-                <%-- COMPLETAR
-                <td>
-                    <c:forEach var="specialty" items="${vet.specialties}">
-                        <c:out value="${specialty.name} "/>
-                    </c:forEach>
-                    <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
+                    <c:out value="${request.pet.name}"/>
                 </td>
 				<td>
-                    <spring:url value="/vets/{vetId}/delete" var="deleteVetUrl">
-                        <spring:param name="vetId" value="${vet.id}"/>
-                    </spring:url>
-                    <a class="glyphicon glyphicon-trash" href="${fn:escapeXml(deleteVetUrl)}"></a>
+                 <c:out value="${request.pet.type}"/>
                 </td>
                 <td>
-                    <spring:url value="/vets/{vetId}/edit" var="vetUrl">
-						<spring:param name="vetId" value="${vet.id}" />
-					</spring:url> 
-                    <a class="glyphicon glyphicon-pencil" href="${fn:escapeXml(vetUrl)}"></a>
+                    <c:out value="${request.pet.birthDate}"/>
                 </td>
-                --%>
+                <td>
+                    <c:out value="${request.pet.owner.firstName}"/>
+                </td>
+                <td>
+                    <c:out value="${request.pet.owner.address}"/>
+                </td>
                 <td>
                     <spring:url value="/adoptions/requests/{requestId}/applications/new" var="requestUrl">
 						<spring:param name="requestId" value="${request.id}" />

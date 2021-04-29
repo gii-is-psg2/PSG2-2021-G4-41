@@ -43,10 +43,12 @@ public class AdoptionController {
     public String listRequests(Map<String, Object> model) {
         Owner owner = loggedOwner();
         List<AdoptionRequest> requests = (List<AdoptionRequest>) adoptionService.listAdoptionRequests();
-        List<AdoptionRequest> myRequests = (List<AdoptionRequest>) adoptionService
-                .listMyAdoptionRequests(owner.getId());
+        /*
+         * List<AdoptionRequest> myRequests = (List<AdoptionRequest>) adoptionService
+         * .listMyAdoptionRequests(owner.getId());
+         */
         model.put("requests", requests);
-        model.put("myRequests", myRequests);
+        /* model.put("myRequests", myRequests); */
         return "adoptions/listRequests";
     }
 
