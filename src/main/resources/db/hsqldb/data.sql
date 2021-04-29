@@ -69,4 +69,4 @@ INSERT INTO requests(id,pet_id,owner_id) VALUES (3, 2, 2);
 INSERT INTO requests(id,pet_id,owner_id) VALUES (4, 4, 3);
 
 INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (1, 0, 'New application', 1, 3);
-INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (1, 0, 'New application 2', 1, 4);
+INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (2, 0, 'New application 2', 1, 4);
