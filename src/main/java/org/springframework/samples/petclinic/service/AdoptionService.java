@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -31,11 +29,13 @@ public class AdoptionService {
 		adoptionApplicationRepository.save(adoptionApplication);
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<AdoptionApplication> listAdoptionApplicationsByRequestId(Integer reqId)
 			throws DataAccessException {
 		return this.adoptionApplicationRepository.findByRequestId(reqId);
 	}
 
+	@Transactional(readOnly = true)
 	public AdoptionApplication findApplicationById(Integer id) {
 		return this.adoptionApplicationRepository.findById(id);
 	}
@@ -45,14 +45,17 @@ public class AdoptionService {
 		adoptionRequestRepository.save(adoptionRequest);
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<AdoptionRequest> listAdoptionRequests() throws DataAccessException {
 		return adoptionRequestRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	public Collection<AdoptionRequest> listMyAdoptionRequests(Integer ownerId) throws DataAccessException {
 		return adoptionRequestRepository.findByOwnerId(ownerId);
 	}
 
+	@Transactional(readOnly = true)
 	public AdoptionRequest findRequestById(Integer id) {
 		return this.adoptionRequestRepository.findById(id);
 	}
