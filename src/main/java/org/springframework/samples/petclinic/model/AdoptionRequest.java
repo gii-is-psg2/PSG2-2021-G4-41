@@ -16,6 +16,13 @@ import lombok.Setter;
 @Setter
 @Table(name = "requests")
 public class AdoptionRequest extends BaseEntity {
+    
+    /* ATTRIBUTES */
+
+    @Column(name = "timestamp")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Timestamp
+    private Date timestamp;
 
     /* RELATIONS */
     /**

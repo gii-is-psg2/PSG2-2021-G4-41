@@ -19,25 +19,32 @@ public class AdoptionService {
 	private VetRepository vetRepository;
 	
 	@Autowired
-	public AdoptionService(AdoptionApplicationRepository adoptionApplicationRepository, AdoptionRequestRepository adoptionRequestRepository, VetRepository vetRepository) {
+	public AdoptionService(AdoptionApplicationRepository adoptionApplicationRepository, AdoptionRequestRepository adoptionRequestRepository) {
 		this.adoptionApplicationRepository=adoptionApplicationRepository;
 		this.adoptionRequestRepository=adoptionRequestRepository;
-		this.vetRepository = vetRepository;
 	}
 	
 	@Transactional
 	public void saveAdoptionApplication(AdoptionApplication adoptionApplication) throws DataAccessException {
 		adoptionApplicationRepository.save(adoptionApplication);
 	}
+
+	public Collection<Adoption> listAdoptionApplicationsByRequestId(Integer reqId) throws DataAccessException {
+		return adoptionApplicationRepository.findByRequestId(reqId);
+	}
 	
 	@Transactional
 	public void saveAdoptionRequest(AdoptionRequest adoptionRequest) throws DataAccessException {
 		adoptionRequestRepository.save(adoptionRequest);
 	}
-	
-	@Transactional(readOnly = true)
-	public Collection<Vet> findVets() throws DataAccessException {
-		return vetRepository.findAll();
+
+	public Collection<AdoptionRequest> listAdoptionRequests() throws DataAccessException {
+		return adoptionRequestRepository.findAll();
 	}
+
+	public Collection<AdoptionRequest> listMyAdoptionRequests(Integer ownerId) throws DataAccessException {
+		return adoptionRequestRepository.findByOwnerId(ownerId);
+	}
+	
 	
 }

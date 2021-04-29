@@ -26,6 +26,11 @@ public class AdoptionApplication extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "timestamp")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Timestamp
+    private Date timestamp;
+
     /* RELATIONS */
 
     @ManyToOne

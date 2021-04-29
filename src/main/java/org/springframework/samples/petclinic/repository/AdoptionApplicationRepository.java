@@ -6,5 +6,6 @@ import org.springframework.samples.petclinic.model.Pet;
 
 public interface AdoptionApplicationRepository extends CrudRepository<AdoptionApplication,Integer> {
 
-	AdoptionApplication findById(int id) throws DataAccessException;
+	@Query("SELECT application FROM AdoptionApplication application WHERE application.request.id = ?1 ORDER BY application.timestamp")
+	AdoptionApplication findByRequestId(int id) throws DataAccessException;
 }
