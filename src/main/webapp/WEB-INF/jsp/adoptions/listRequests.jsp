@@ -105,7 +105,7 @@
                     <spring:url value="/adoptions/requests/{myRequestId}/applications" var="myRequestUrl">
 						<spring:param name="myRequestId" value="${myRequest.id}" />
 					</spring:url> 
-                    <a class="glyphicon glyphicon-th-list" href="${fn:escapeXml(myRequestUrl)}"></a>
+                    <a class="glyphicon glyphicon-th-list" href="${fn:escapeXml(myRequestUrl)}"></a>                
                 </td>
             </tr>
         </c:forEach>

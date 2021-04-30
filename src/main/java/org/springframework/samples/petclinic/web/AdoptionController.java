@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.AdoptionApplication;
 import org.springframework.samples.petclinic.model.AdoptionRequest;
 import org.springframework.samples.petclinic.model.Owner;
@@ -15,7 +16,9 @@ import org.springframework.samples.petclinic.model.RoomBooking;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AdoptionService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -49,9 +52,10 @@ public class AdoptionController {
     public String listRequests(Map<String, Object> model) {
         Owner owner = loggedOwner();
         List<AdoptionRequest> requests = adoptionService.listAdoptionRequests().stream()
-                .filter(r -> r.getOwner() != owner).collect(Collectors.toList());
+                .filter(r -> r.getOwner() != owner && !r.isClosed()).collect(Collectors.toList());
         List<AdoptionRequest> myRequests = owner.getId() != null
-                ? (List<AdoptionRequest>) adoptionService.listMyAdoptionRequests(owner.getId())
+                ? (List<AdoptionRequest>) adoptionService.listMyAdoptionRequests(owner.getId()).stream()
+                        .filter(r -> !r.isClosed()).collect(Collectors.toList())
                 : new ArrayList<>();
         model.put("requests", requests);
         model.put("myRequests", myRequests);
@@ -68,9 +72,11 @@ public class AdoptionController {
     }
 
     @PostMapping(value = "/adoptions/requests/new")
-    public String processNewRequestForm(@Valid RoomBooking r, BindingResult result) {
-
-        // TODO
+    public String processNewRequestForm(@Valid AdoptionRequest request, BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/adoptions/requests";
+        } else
+            adoptionService.saveAdoptionRequest(request);
         return "redirect:/adoptions/requests";
     }
 
@@ -95,15 +101,25 @@ public class AdoptionController {
 
     @PostMapping(value = "/adoptions/requests/{requestId}/applications/new")
     public String processNewApplicationForm(@Valid AdoptionApplication application, BindingResult result) {
-
-        // TODO
+        if (result.hasErrors()) {
+            return "redirect:/adoptions/requests";
+        } else
+            adoptionService.saveAdoptionApplication(application);
         return "redirect:/adoptions/requests";
     }
 
-    @PostMapping(value = "/adoptions/requests/{requestId}/applications/{applicationId}/confirm")
+    @GetMapping(value = "/adoptions/requests/{requestId}/applications/{applicationId}/confirm")
     public String confirmApplication(@PathVariable("applicationId") Integer applicationId) {
-        adoptionService.findApplicationById(applicationId);
-        return "redirect:/adoptions/requests";
+        AdoptionApplication application = adoptionService.findApplicationById(applicationId);
+        if (application.getRequest().getPet().getOwner() == this.loggedOwner()) {
+            try {
+                adoptionService.confirmApplication(application);
+                return "redirect:/adoptions/requests";
+            } catch (DataAccessException | DuplicatedPetNameException e) {
+                return "redirect:/oups";
+            }
+        }
+        return "redirect:/oups";
     }
 
 }

@@ -87,7 +87,7 @@ public class Pet extends NamedEntity {
 		return this.owner;
 	}
 
-	protected void setOwner(Owner owner) {
+	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
 
@@ -114,7 +114,7 @@ public class Pet extends NamedEntity {
 		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
 		return Collections.unmodifiableList(sortedVisits);
 	}
-	
+
 	public void setVisits(Set<Visit> visits) {
 		this.visits = visits;
 	}
@@ -134,10 +134,10 @@ public class Pet extends NamedEntity {
 		getRoomBookingsInternal().add(roomBooking);
 		roomBooking.setPet(this);
 	}
-	
-	/*Auxiliar*/
+
+	/* Auxiliar */
 	public long getAge() {
-		
+
 		return ChronoUnit.YEARS.between(this.birthDate, LocalDate.now());
 	}
 

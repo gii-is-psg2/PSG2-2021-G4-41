@@ -1,10 +1,12 @@
 package org.springframework.samples.petclinic.model;
 
+import java.beans.Transient;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -41,8 +43,13 @@ public class AdoptionRequest extends BaseEntity {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "applications")
     private Collection<AdoptionApplication> applications;
 
+    /* DERIVATIVE */
+    @Transient
+    public Boolean isClosed() {
+        return this.applications.stream().anyMatch(ap -> ap.getApproved());
+    }
 }
