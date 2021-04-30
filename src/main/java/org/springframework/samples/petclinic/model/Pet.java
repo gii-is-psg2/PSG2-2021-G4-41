@@ -29,6 +29,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -132,6 +133,12 @@ public class Pet extends NamedEntity {
 	public void addRoomBooking(RoomBooking roomBooking) {
 		getRoomBookingsInternal().add(roomBooking);
 		roomBooking.setPet(this);
+	}
+	
+	/*Auxiliar*/
+	public long getAge() {
+		
+		return ChronoUnit.YEARS.between(this.birthDate, LocalDate.now());
 	}
 
 }

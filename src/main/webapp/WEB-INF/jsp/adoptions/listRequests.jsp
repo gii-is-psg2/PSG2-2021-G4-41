@@ -16,8 +16,8 @@
 
     <br/>
     <br/>
-    <br/>
-
+    
+    <div>
     <h2>Adoptions Requests</h2>
 
     <table id="requestsTable" class="table table-striped">
@@ -25,8 +25,8 @@
         <tr>
             <th>Pet Name</th>
             <th>Type</th>
-            <th>Birth Date</th>
-            <th>Location</th>
+            <th>Age (Years)</th>
+            <th>Location (City)</th>
             <th>Owner</th>
             <th>Apply</th>
      
@@ -42,13 +42,13 @@
                  <c:out value="${request.pet.type}"/>
                 </td>
                 <td>
-                    <c:out value="${request.pet.birthDate}"/>
+                    <c:out value="${request.pet.getAge()}"/><%-- ${request.pet.birthDate} --%>
                 </td>
                 <td>
-                    <c:out value="${request.pet.owner.firstName}"/>
+                    <c:out value="${request.pet.owner.city}"/>
                 </td>
                 <td>
-                    <c:out value="${request.pet.owner.address}"/>
+                    <c:out value="${request.pet.owner.firstName} ${request.pet.owner.lastName}"/>
                 </td>
                 <td>
                     <spring:url value="/adoptions/requests/{requestId}/applications/new" var="requestUrl">
@@ -60,4 +60,56 @@
         </c:forEach>
         </tbody>
     </table>
+    <br/>
+    <br/>
+    <br/>	
+    </div>
+    
+    <div>
+    <h2>Adoptions Applications of my Pets</h2>
+
+    <table id="applicationsTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Pet Name</th>
+            <th>Type</th>
+            <th>Age (Years)</th>
+            <%--
+            <th>Number of Applications</th>
+            --%>
+            <th>Applications List</th>
+     
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${requests}" var="myRequest">
+            <tr>
+                <td>
+                    <c:out value="${myRequest.pet.name}"/>
+                </td>
+				<td>
+                 <c:out value="${myRequest.pet.type}"/>
+                </td>
+                <td>
+                    <c:out value="${myRequest.pet.getAge()}"/><%-- ${request.pet.birthDate} --%>
+                </td>
+                <%--
+                <td>
+                	<c:if test="${applications.size() == 0}">none</c:if>
+                	<c:if test="${applications.size() != 0}">
+                		<c:out value="${applications.size()}"/>
+                	</c:if>
+                </td>
+                --%>
+                <td>                
+                    <spring:url value="/adoptions/requests/{myRequestId}/applications" var="myRequestUrl">
+						<spring:param name="myRequestId" value="${myRequest.id}" />
+					</spring:url> 
+                    <a class="glyphicon glyphicon-th-list" href="${fn:escapeXml(myRequestUrl)}"></a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </div>
 </petclinic:layout>

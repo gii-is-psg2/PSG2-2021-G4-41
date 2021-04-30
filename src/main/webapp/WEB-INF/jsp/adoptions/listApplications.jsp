@@ -1,12 +1,61 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-</body>
-</html>
+<petclinic:layout pageName="listApplications">
+	<div>
+	<table class="table table-striped">
+        <tr>
+            <th>Pet Name</th>
+            <td><c:out value="${applications.request.pet.name}"/></td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td><c:out value="${applications.request.pet.type}"/></td>
+        </tr>
+        <tr>
+            <th>Age (Years)</th>
+            <td><c:out value="${applications.request.pet.getAge()}"/></td>
+        </tr>
+    </table>
+	</div>
+
+    <div>
+    <h2>Adoptions Applications</h2>
+
+    <table id="applicationsTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>New Owner Name</th>
+            <th>Location (City)</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Approve</th>
+     
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${applications}" var="application">
+            <tr>
+                <td>
+                    <c:out value="${application.owner.firstName} ${application.owner.lastName}"/>
+                </td>
+                <td>
+                 	<c:out value="${application.owner.city}"/>
+                </td>
+				<td>
+                 	<c:out value="${application.description}"/>
+                </td>
+                <td>
+                    <button class="btn btn-default" type="submit">Accept</button>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>	
+    </div>
+</petclinic:layout>

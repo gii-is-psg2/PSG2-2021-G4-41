@@ -6,26 +6,33 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="adoptionsRequests">
-    <h2>
-    	<c:if test="${adoptionRequest['new']}"></c:if> New Adoption Request
-    </h2>
-    <form:form modelAttribute="adoptionRequest" class="form-horizontal" id="add-adoptionRequest-form">
+<petclinic:layout pageName="createAdoptionRequest">    
+    <jsp:body>
+
+	<h2><c:if test="${requests['new']}"></c:if>New Adoption Application</h2>
+	
+    <form:form modelAttribute="newRequest" class="form-horizontal">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="First Name" name="firstName"/>
-            <%-- COMPLETAR --%>
+        	<petclinic:inputField label="Date" name="timestamp"/>
+        	<%--  
+        	<label for="requestPets">Pets:</label> <select multiple
+				name="requestPets" id="requestPets">
+				<c:forEach items="${requestPets}" var="requestPets">
+					<option value="${requestPets.id}">
+						<c:out value="${requestPets.name}"/>
+					</option>
+				</c:forEach>
+				</select>
+			 --%>
+            
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <c:choose>
-                    <c:when test="${adoptionRequest['new']}">
-                    <button class="btn btn-default" type="submit">Save</button>
-					</c:when>
-					<c:otherwise>
-						<button class="btn btn-default" type="submit">Save</button>
-					</c:otherwise>
-                </c:choose>
+            	<input type="hidden" name="ownerId" value="${applications.owner.id}"/>
+            	<button class="btn btn-default" type="submit">Do an Adoption Request</button>
             </div>
         </div>
-    </form:form>
+    </form:form>  
+    
+    </jsp:body>
 </petclinic:layout>
