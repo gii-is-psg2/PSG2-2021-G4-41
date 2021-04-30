@@ -11,15 +11,15 @@
 	<table class="table table-striped">
         <tr>
             <th>Pet Name</th>
-            <td><c:out value="${applications.request.pet.name}"/></td>
+            <td><c:out value="${request.pet.name}"/></td>
         </tr>
         <tr>
             <th>Type</th>
-            <td><c:out value="${applications.request.pet.type}"/></td>
+            <td><c:out value="${request.pet.type}"/></td>
         </tr>
         <tr>
             <th>Age (Years)</th>
-            <td><c:out value="${applications.request.pet.getAge()}"/></td>
+            <td><c:out value="${request.pet.getAge()}"/></td>
         </tr>
     </table>
 	</div>
@@ -42,13 +42,16 @@
         <c:forEach items="${applications}" var="application">
             <tr>
                 <td>
-                    <c:out value="${application.owner.firstName} ${application.owner.lastName}"/>
+                    <c:out value="${application.futureOwner.firstName} ${application.futureOwner.lastName}"/>
                 </td>
                 <td>
-                 	<c:out value="${application.owner.city}"/>
+                 	<c:out value="${application.futureOwner.city}"/>
                 </td>
 				<td>
                  	<c:out value="${application.description}"/>
+                </td>
+                <td>
+                 	<c:out value="${application.timestamp}"/>
                 </td>
                 <td>
                     <button class="btn btn-default" type="submit">Accept</button>

@@ -64,9 +64,9 @@
     <br/>
     <br/>	
     </div>
-    
+
     <div>
-    <h2>Adoptions Applications of my Pets</h2>
+    <h2>Adoption Applications for my Pets</h2>
 
     <table id="applicationsTable" class="table table-striped">
         <thead>
@@ -82,7 +82,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requests}" var="myRequest">
+        <c:forEach items="${myRequests}" var="myRequest">
             <tr>
                 <td>
                     <c:out value="${myRequest.pet.name}"/>

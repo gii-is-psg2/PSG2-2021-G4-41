@@ -13,8 +13,7 @@
 	
     <form:form modelAttribute="newApplication" class="form-horizontal">
         <div class="form-group has-feedback">
-        	<petclinic:inputField label="Description" name="description"/>
-        	<petclinic:inputField label="Date" name="timestamp"/>           
+        	<petclinic:inputField label="Description" name="description"/>   
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

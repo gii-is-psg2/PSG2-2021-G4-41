@@ -1,7 +1,9 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -10,8 +12,10 @@ import org.springframework.samples.petclinic.model.AdoptionApplication;
 import org.springframework.samples.petclinic.model.AdoptionRequest;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.RoomBooking;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AdoptionService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,11 +29,13 @@ public class AdoptionController {
 
     private final AdoptionService adoptionService;
     private final OwnerService ownerService;
+    private final UserService userService;
 
     @Autowired
-    public AdoptionController(AdoptionService adoptionService, OwnerService ownerService) {
+    public AdoptionController(AdoptionService adoptionService, OwnerService ownerService, UserService userService) {
         this.adoptionService = adoptionService;
         this.ownerService = ownerService;
+        this.userService = userService;
     }
 
     private Owner loggedOwner() {
@@ -42,13 +48,13 @@ public class AdoptionController {
     @GetMapping(value = "/adoptions/requests")
     public String listRequests(Map<String, Object> model) {
         Owner owner = loggedOwner();
-        List<AdoptionRequest> requests = (List<AdoptionRequest>) adoptionService.listAdoptionRequests();
-        /*
-         * List<AdoptionRequest> myRequests = (List<AdoptionRequest>) adoptionService
-         * .listMyAdoptionRequests(owner.getId());
-         */
+        List<AdoptionRequest> requests = adoptionService.listAdoptionRequests().stream()
+                .filter(r -> r.getOwner() != owner).collect(Collectors.toList());
+        List<AdoptionRequest> myRequests = owner.getId() != null
+                ? (List<AdoptionRequest>) adoptionService.listMyAdoptionRequests(owner.getId())
+                : new ArrayList<>();
         model.put("requests", requests);
-        /* model.put("myRequests", myRequests); */
+        model.put("myRequests", myRequests);
         return "adoptions/listRequests";
     }
 
@@ -69,10 +75,11 @@ public class AdoptionController {
     }
 
     @GetMapping(value = "/adoptions/requests/{requestId}/applications")
-    public String listApplications(Map<String, Object> model, @PathVariable("requestId") Integer requestId,
-            @PathVariable("applicationId") Integer applicationId) {
+    public String listApplications(Map<String, Object> model, @PathVariable("requestId") Integer requestId) {
         List<AdoptionApplication> applications = (List<AdoptionApplication>) adoptionService
                 .listAdoptionApplicationsByRequestId(requestId);
+        AdoptionRequest request = adoptionService.findRequestById(requestId);
+        model.put("request", request);
         model.put("applications", applications);
         return "adoptions/listApplications";
     }
