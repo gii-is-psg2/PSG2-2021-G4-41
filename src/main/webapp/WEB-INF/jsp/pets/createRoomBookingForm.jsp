@@ -28,7 +28,7 @@
             </tr>
             </thead>
             <tr>
-                <td><c:out value="${roomBooking.pet.name}"/></td>xº
+                <td><c:out value="${roomBooking.pet.name}"/></td>
                 <td><petclinic:localDate date="${roomBooking.pet.birthDate}" pattern="yyyy/MM/dd"/></td>
                 <td><c:out value="${roomBooking.pet.type.name}"/></td>
                 <td><c:out value="${roomBooking.pet.owner.firstName} ${roomBooking.pet.owner.lastName}"/></td>

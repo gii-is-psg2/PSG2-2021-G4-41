@@ -57,30 +57,30 @@ public class RoomBookingController {
 	// }
 
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) throws IncorrectDatesException {
+	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
 
 		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
 		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
-
-		if (c1 && c2) {
-			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
-			result.rejectValue("checkOut", "error.IncorrectCheckOut",
-					"Check out's date must be after check out's date");
+		if (result.hasErrors())
 			return "pets/createRoomBookingForm";
-		} else if (!c1 && c2) {
-			result.rejectValue("checkOut", "error.IncorrectCheckOut",
-					"Check out's date must be after check out's date");
-			return "pets/createRoomBookingForm";
-		} else if (c1 && !c2) {
-			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
-			return "pets/createRoomBookingForm";
-		} else {
-			try {
-				this.roomBookingService.saveRoom(r);
-			} catch (ConcurrentBookingException e) {
-				result.rejectValue("checkIn", "error.ConcurrentBooking", "You can not book a room concurrently");
+		try {
+			this.roomBookingService.saveRoom(r);
+		} catch (IncorrectDatesException e1) {
+			if (c1 && c2) {
+				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
+				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
+				return "pets/createRoomBookingForm";
+			} else if (!c1 && c2) {
+				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
+				return "pets/createRoomBookingForm";
+			} else if (c1 && !c2) {
+				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
 				return "pets/createRoomBookingForm";
 			}
+		} catch (ConcurrentBookingException e2) {
+			result.rejectValue("checkIn", "error.ConcurrentBooking", "You can not book a room concurrently");
+			result.rejectValue("checkOut", "error.ConcurrentBooking", "You can not book a room concurrently");
+			return "pets/createRoomBookingForm";
 		}
 
 		return "redirect:/owners/{ownerId}";

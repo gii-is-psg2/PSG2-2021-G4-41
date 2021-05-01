@@ -42,16 +42,12 @@ import org.springframework.util.StringUtils;
 public class PetService {
 
 	private PetRepository petRepository;
-
 	private VisitRepository visitRepository;
-	private RoomBookingRepository roomBookingRepository;
 
 	@Autowired
-	public PetService(PetRepository petRepository, VisitRepository visitRepository,
-			RoomBookingRepository roomBookingRepository) {
+	public PetService(PetRepository petRepository, VisitRepository visitRepository) {
 		this.petRepository = petRepository;
 		this.visitRepository = visitRepository;
-		this.roomBookingRepository = roomBookingRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -62,11 +58,6 @@ public class PetService {
 	@Transactional
 	public void saveVisit(Visit visit) throws DataAccessException {
 		visitRepository.save(visit);
-	}
-
-	@Transactional
-	public void saveRoomBooking(RoomBooking roomBooking) {
-		roomBookingRepository.save(roomBooking);
 	}
 
 	@Transactional(readOnly = true)

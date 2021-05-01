@@ -15,29 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoomBookingService {
-	
-	private RoomBookingRepository roomBookingRP;
-   
 
-    @Autowired
-    public RoomBookingService(RoomBookingRepository roomBookingRP) {
-        this.roomBookingRP = roomBookingRP;
-        
-    }
-	
+	private RoomBookingRepository roomBookingRP;
+
+	@Autowired
+	public RoomBookingService(RoomBookingRepository roomBookingRP) {
+		this.roomBookingRP = roomBookingRP;
+	}
 
 	@Transactional
 	public void saveRoom(RoomBooking r) throws IncorrectDatesException, ConcurrentBookingException {
+		Collection<RoomBooking> bookings = roomBookingRP.findByPetId(r.getPet().getId());
 		if (!(r.getCheckIn().isAfter(LocalDate.now()) && r.getCheckOut().isAfter(r.getCheckIn()))) {
 			throw new IncorrectDatesException();
-		}
-		Collection<RoomBooking> rooms = roomBookingRP.findByPetId(r.getPet().getId());
-		for(RoomBooking room:rooms) {
-			if(!(room.getCheckOut().isBefore(r.getCheckIn()) || room.getCheckIn().isAfter(r.getCheckOut()))) {
-				throw new ConcurrentBookingException();
-			}
-		}
-		roomBookingRP.save(r);
+		} else if (bookings.stream().anyMatch(
+				room -> !(room.getCheckOut().isBefore(r.getCheckIn()) || room.getCheckIn().isAfter(r.getCheckOut())))) {
+			throw new ConcurrentBookingException();
+		} else
+			roomBookingRP.save(r);
+
 	}
 
 	@Transactional
