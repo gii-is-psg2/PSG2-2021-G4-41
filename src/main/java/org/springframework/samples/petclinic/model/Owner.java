@@ -62,13 +62,13 @@ public class Owner extends Person {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<Pet> pets;
-	
+
 	//
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
+	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	//
-	
+
 	public String getAddress() {
 		return this.address;
 	}
@@ -118,30 +118,39 @@ public class Owner extends Person {
 		return Collections.unmodifiableList(sortedPets);
 	}
 
+	@OneToMany
+	@JoinColumn(name = "application_id")
+	private List<AdoptionApplication> applications;
+
+	@OneToMany
+	@JoinColumn(name = "request_id")
+	private List<AdoptionRequest> requests;
+
 	public void addPet(Pet pet) {
 		getPetsInternal().add(pet);
 		pet.setOwner(this);
 	}
-	
+
 	public boolean removePet(Pet pet) {
 		return getPetsInternal().remove(pet);
 	}
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
+	 * 
 	 * @param name to test
 	 * @return true if pet name is already in use
 	 */
 	public Pet getPet(String name) {
 		return getPet(name, false);
 	}
-	
-	public Pet getPetwithIdDifferent(String name,Integer id) {
+
+	public Pet getPetwithIdDifferent(String name, Integer id) {
 		name = name.toLowerCase();
 		for (Pet pet : getPetsInternal()) {
 			String compName = pet.getName();
 			compName = compName.toLowerCase();
-			if (compName.equals(name) && pet.getId()!=id) {
+			if (compName.equals(name) && pet.getId() != id) {
 				return pet;
 			}
 		}
@@ -150,6 +159,7 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
+	 * 
 	 * @param name to test
 	 * @return true if pet name is already in use
 	 */
