@@ -11,6 +11,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.RoomBooking;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.RoomBookingService;
+import org.springframework.samples.petclinic.service.exceptions.ConcurrentBookingException;
 import org.springframework.samples.petclinic.service.exceptions.IncorrectDatesException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,10 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RoomBookingController {
 
 	private final PetService petService;
-
+	private final RoomBookingService roomBookingService;
 	@Autowired
-	public RoomBookingController(PetService petService) {
+	public RoomBookingController(PetService petService,RoomBookingService roomBookingService) {
 		this.petService = petService;
+		this.roomBookingService = roomBookingService;
 	}
 
 	@ModelAttribute("roomBooking")
@@ -57,7 +59,7 @@ public class RoomBookingController {
 //	}
 	
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
+	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) throws IncorrectDatesException {
 		
 		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
 		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
@@ -73,8 +75,13 @@ public class RoomBookingController {
 			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
 			return "pets/createRoomBookingForm";
 		} else {
-			this.petService.saveRoomBooking(r);
-		}
+			try {
+			this.roomBookingService.saveRoom(r);
+			}	catch(ConcurrentBookingException e) {
+				result.rejectValue("checkIn", "error.ConcurrentBooking", "You can not book a room concurrently");
+				return "pets/createRoomBookingForm";
+			}
+		} 
 
 		return "redirect:/owners/{ownerId}";
 	}
