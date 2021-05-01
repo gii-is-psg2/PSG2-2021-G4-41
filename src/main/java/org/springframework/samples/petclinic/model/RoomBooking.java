@@ -8,11 +8,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.NonFinal;
 
 @Entity
 @Getter
@@ -25,12 +27,14 @@ public class RoomBooking extends BaseEntity {
      */
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull
     private LocalDate checkIn;
     /**
      * Finish date of the booking
      */
     @Column(name = "finish_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @NotNull
     private LocalDate checkOut;
 
     /* RELATIONS */

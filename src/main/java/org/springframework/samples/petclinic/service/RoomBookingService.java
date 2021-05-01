@@ -24,7 +24,7 @@ public class RoomBookingService {
 	}
 
 	@Transactional
-	public void saveRoom(RoomBooking r) throws IncorrectDatesException, ConcurrentBookingException {
+	public void save(RoomBooking r) throws IncorrectDatesException, ConcurrentBookingException {
 		Collection<RoomBooking> bookings = roomBookingRP.findByPetId(r.getPet().getId());
 		if (!(r.getCheckIn().isAfter(LocalDate.now()) && r.getCheckOut().isAfter(r.getCheckIn()))) {
 			throw new IncorrectDatesException();

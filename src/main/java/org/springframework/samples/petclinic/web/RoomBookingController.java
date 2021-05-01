@@ -43,14 +43,14 @@ public class RoomBookingController {
 	}
 
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
-
+	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result, Map<String, Object> model) {
+		if (result.hasErrors()) {
+			return "pets/createRoomBookingForm";
+		}
 		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
 		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
-		if (result.hasErrors())
-			return "pets/createRoomBookingForm";
 		try {
-			this.roomBookingService.saveRoom(r);
+			this.roomBookingService.save(r);
 		} catch (IncorrectDatesException e1) {
 			if (c1 && c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
