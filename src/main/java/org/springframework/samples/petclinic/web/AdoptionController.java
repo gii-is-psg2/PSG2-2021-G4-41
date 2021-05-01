@@ -12,11 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.AdoptionApplication;
 import org.springframework.samples.petclinic.model.AdoptionRequest;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.RoomBooking;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AdoptionService;
 import org.springframework.samples.petclinic.service.OwnerService;
-import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.security.core.Authentication;
@@ -55,7 +52,7 @@ public class AdoptionController {
                 .filter(r -> r.getOwner() != owner && !r.isClosed()).collect(Collectors.toList());
         List<AdoptionRequest> myRequests = owner.getId() != null
                 ? (List<AdoptionRequest>) adoptionService.listMyAdoptionRequests(owner.getId()).stream()
-                        .filter(r -> !r.isClosed()).collect(Collectors.toList())
+                        .filter(r -> r.isClosed()).collect(Collectors.toList())
                 : new ArrayList<>();
         model.put("requests", requests);
         model.put("myRequests", myRequests);
@@ -74,7 +71,7 @@ public class AdoptionController {
             Map<String, Object> model) {
         if (result.hasErrors() || request.getPet() == null) {
             result.rejectValue("pet", "error.incorrectPet", "Pet needed, maybe any available");
-            return "redirect:/adoptions/requests/new";
+            return "adoptions/createAdoptionRequest";
         } else {
             AdoptionRequest newRequest = new AdoptionRequest();
             newRequest.setOwner(this.loggedOwner());
@@ -105,7 +102,7 @@ public class AdoptionController {
             @Valid AdoptionApplication application, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
             result.rejectValue("description", "error.incorrectDescription", "Description needed");
-            return "/adoptions/requests/{requestId}/applications/new";
+            return "adoptions/createAdoptionApplication";
         } else {
             AdoptionRequest request = adoptionService.findRequestById(requestId);
             AdoptionApplication newApplication = new AdoptionApplication();
@@ -114,8 +111,8 @@ public class AdoptionController {
             newApplication.setDescription(application.getDescription());
             newApplication.setRequest(request);
             adoptionService.saveAdoptionApplication(newApplication);
+            return "redirect:/adoptions/requests";
         }
-        return "redirect:/adoptions/requests";
     }
 
     @GetMapping(value = "/adoptions/requests/{requestId}/applications/{applicationId}/confirm")

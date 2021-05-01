@@ -58,7 +58,7 @@
 						<spring:param name="requestId" value="${request.id}" />
                         <spring:param name="applicationId" value="${application.id}" />
 					</spring:url> 
-                    <a class="glyphicon glyphicon-th-list" href="${fn:escapeXml(confirm)}"></a>              
+                    <a class="glyphicon glyphicon-ok" href="${fn:escapeXml(confirm)}"></a>              
                   </td>
             </tr>
         </c:forEach>
