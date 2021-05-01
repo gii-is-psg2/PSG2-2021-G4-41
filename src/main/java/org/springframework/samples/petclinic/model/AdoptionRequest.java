@@ -31,6 +31,9 @@ public class AdoptionRequest extends BaseEntity {
     @CreationTimestamp
     private Date timestamp;
 
+    @Column(name = "is_closed")
+    public Boolean isClosed;
+
     /* RELATIONS */
     /**
      * Holds value of property pet.
@@ -47,9 +50,4 @@ public class AdoptionRequest extends BaseEntity {
     @JoinColumn(name = "applications")
     private Collection<AdoptionApplication> applications;
 
-    /* DERIVATIVE */
-    @Transient
-    public Boolean isClosed() {
-        return this.applications.stream().anyMatch(ap -> ap.getApproved());
-    }
 }

@@ -14,7 +14,6 @@ import org.springframework.samples.petclinic.model.AdoptionRequest;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AdoptionService;
 import org.springframework.samples.petclinic.service.OwnerService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.service.exceptions.ForbiddenException;
 import org.springframework.security.core.Authentication;
@@ -50,11 +49,9 @@ public class AdoptionController {
     public String listRequests(Map<String, Object> model) throws ForbiddenException {
         Owner owner = loggedOwner();
         List<AdoptionRequest> requests = adoptionService.listAdoptionRequests().stream()
-                .filter(r -> r.getOwner() != owner && !r.isClosed()).collect(Collectors.toList());
-        List<AdoptionRequest> myRequests = owner.getId() != null
-                ? (List<AdoptionRequest>) adoptionService.listMyAdoptionRequests(owner.getId()).stream()
-                        .filter(r -> r.isClosed()).collect(Collectors.toList())
-                : new ArrayList<>();
+                .filter(r -> r.getOwner() != owner && !r.getIsClosed()).collect(Collectors.toList());
+        List<AdoptionRequest> myRequests = owner.getId() != null ? adoptionService.listMyAdoptionRequests(owner.getId())
+                .stream().filter(r -> !r.getIsClosed()).collect(Collectors.toList()) : new ArrayList<>();
         model.put("requests", requests);
         model.put("myRequests", myRequests);
         return "adoptions/listRequests";
@@ -77,6 +74,7 @@ public class AdoptionController {
             AdoptionRequest newRequest = new AdoptionRequest();
             newRequest.setOwner(this.loggedOwner());
             newRequest.setPet(request.getPet());
+            newRequest.setIsClosed(false);
             adoptionService.saveAdoptionRequest(newRequest);
             return "redirect:/adoptions/requests";
         }

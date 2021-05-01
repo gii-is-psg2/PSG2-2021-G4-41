@@ -69,7 +69,10 @@ public class AdoptionService {
 			throws DataAccessException, DuplicatedPetNameException {
 		application.setApproved(true);
 		adoptionApplicationRepository.save(application);
-		Pet pet = application.getRequest().getPet();
+		AdoptionRequest request = application.getRequest();
+		request.setIsClosed(true);
+		this.saveAdoptionRequest(request);
+		Pet pet = request.getPet();
 		pet.setOwner(application.getFutureOwner());
 		petService.savePet(pet);
 	}
