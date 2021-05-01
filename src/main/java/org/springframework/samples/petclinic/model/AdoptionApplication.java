@@ -7,10 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jdk.jfr.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,11 +30,12 @@ public class AdoptionApplication extends BaseEntity {
      * description
      */
     @Column(name = "description")
+    @NotBlank
     private String description;
 
     @Column(name = "timestamp")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @Timestamp
+    @CreationTimestamp
     private Date timestamp;
 
     /* RELATIONS */

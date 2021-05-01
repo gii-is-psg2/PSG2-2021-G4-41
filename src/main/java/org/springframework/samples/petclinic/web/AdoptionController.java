@@ -64,10 +64,7 @@ public class AdoptionController {
 
     @GetMapping(value = "/adoptions/requests/new")
     public String initNewRequestForm(Map<String, Object> model) {
-        AdoptionRequest newRequest = new AdoptionRequest();
-        newRequest.setOwner(loggedOwner());
         model.put("pets", loggedOwner().getPets());
-        model.put("newRequest", newRequest);
         return "adoptions/createAdoptionRequest";
     }
 
@@ -100,11 +97,19 @@ public class AdoptionController {
     }
 
     @PostMapping(value = "/adoptions/requests/{requestId}/applications/new")
-    public String processNewApplicationForm(@Valid AdoptionApplication application, BindingResult result) {
+    public String processNewApplicationForm(@PathVariable("requestId") Integer requestId,
+            @Valid AdoptionApplication application, BindingResult result) {
         if (result.hasErrors()) {
             return "redirect:/adoptions/requests";
-        } else
-            adoptionService.saveAdoptionApplication(application);
+        } else {
+            AdoptionRequest request = adoptionService.findRequestById(requestId);
+            AdoptionApplication newApplication = new AdoptionApplication();
+            newApplication.setFutureOwner(loggedOwner());
+            newApplication.setApproved(false);
+            newApplication.setDescription(application.getDescription());
+            newApplication.setRequest(request);
+            adoptionService.saveAdoptionApplication(newApplication);
+        }
         return "redirect:/adoptions/requests";
     }
 

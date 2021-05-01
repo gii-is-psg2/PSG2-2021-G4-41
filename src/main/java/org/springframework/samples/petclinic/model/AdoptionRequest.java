@@ -12,9 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jdk.jfr.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +28,7 @@ public class AdoptionRequest extends BaseEntity {
 
     @Column(name = "timestamp")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @Timestamp
+    @CreationTimestamp
     private Date timestamp;
 
     /* RELATIONS */

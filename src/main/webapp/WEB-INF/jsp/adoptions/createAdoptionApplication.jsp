@@ -9,7 +9,7 @@
 <petclinic:layout pageName="createAdoptionApplication">    
     <jsp:body>
 
-	<h2><c:if test="${applications['new']}"></c:if>New Adoption Application</h2>
+	<h2>New Application</h2>
 	
     <form:form modelAttribute="newApplication" class="form-horizontal">
         <div class="form-group has-feedback">
@@ -17,9 +17,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-            	<input type="hidden" name="requestId" value="${applications.request.id}"/>
-            	<input type="hidden" name="ownerId" value="${applications.owner.id}"/>
-            	<button class="btn btn-default" type="submit">Do an Adoption Request</button>
+            	<button class="btn btn-default" type="submit">Apply</button>
             </div>
         </div>
     </form:form>  
