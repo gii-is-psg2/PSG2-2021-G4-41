@@ -70,9 +70,9 @@ public class OwnerService {
 	public void delete(Owner owner) {
 		owner.setUser(null);
 		ownerRepository.delete(owner);
-
 	}
 
+	@Transactional(readOnly = true)
 	public Owner findOwnerByUsername(String username) {
 		return ownerRepository.findByUsername(username);
 	}
