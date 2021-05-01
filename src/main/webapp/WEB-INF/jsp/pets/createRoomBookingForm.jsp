@@ -28,7 +28,7 @@
             </tr>
             </thead>
             <tr>
-                <td><c:out value="${roomBooking.pet.name}"/></td>xº
+                <td><c:out value="${roomBooking.pet.name}"/></td>
                 <td><petclinic:localDate date="${roomBooking.pet.birthDate}" pattern="yyyy/MM/dd"/></td>
                 <td><c:out value="${roomBooking.pet.type.name}"/></td>
                 <td><c:out value="${roomBooking.pet.owner.firstName} ${roomBooking.pet.owner.lastName}"/></td>
@@ -56,7 +56,7 @@
                 <th>Check In</th>
                 <th>Check Out</th>
             </tr>
-            <c:forEach var="roomBooking" items="${roomBooking.pet.roomBookings}">
+            <c:forEach var="roomBooking" items="${pet.roomBookings}">
                 <c:if test="${!roomBooking['new']}">
                     <tr>
                         <td><petclinic:localDate date="${roomBooking.checkIn}" pattern="yyyy/MM/dd"/></td>

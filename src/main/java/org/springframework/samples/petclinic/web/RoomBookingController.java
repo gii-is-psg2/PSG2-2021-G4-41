@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.RoomBooking;
 import org.springframework.samples.petclinic.service.PetService;
+import org.springframework.samples.petclinic.service.RoomBookingService;
+import org.springframework.samples.petclinic.service.exceptions.ConcurrentBookingException;
+import org.springframework.samples.petclinic.service.exceptions.IncorrectDatesException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,18 +21,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class RoomBookingController {
 
 	private final PetService petService;
+	private final RoomBookingService roomBookingService;
 
 	@Autowired
-	public RoomBookingController(PetService petService) {
+	public RoomBookingController(PetService petService, RoomBookingService roomBookingService) {
 		this.petService = petService;
+		this.roomBookingService = roomBookingService;
 	}
 
 	@ModelAttribute("roomBooking")
-	public RoomBooking loadPetWithRoomBooking(@PathVariable("petId") int petId) {
-		Pet pet = this.petService.findPetById(petId);
+	public RoomBooking loadRoomBooking() {
 		RoomBooking roomBooking = new RoomBooking();
-		pet.addRoomBooking(roomBooking);
 		return roomBooking;
+	}
+
+	@ModelAttribute("pet")
+	public Pet loadPet(@PathVariable("petId") int petId) {
+		Pet pet = petService.findPetById(petId);
+		return pet;
 	}
 
 	@GetMapping(value = "/owners/*/pets/{petId}/roomBookings/new")
@@ -37,36 +46,37 @@ public class RoomBookingController {
 		return "pets/createRoomBookingForm";
 	}
 
-//	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-//	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
-//		if (result.hasErrors() || !(r.getCheckOut().isAfter(r.getCheckIn()))) {
-//			result.rejectValue("checkOut", "error.IncorrectCheckOut", "La fecha de fin debe ser posterior a la fecha de inicio");
-//			return "pets/createRoomBookingForm";
-//		} else {
-//			this.petService.saveRoomBooking(r);
-//		}
-//
-//		return "redirect:/owners/{ownerId}";
-//	}
-	
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
-		
-		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
-		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
-		
-		if (c1 && c2) {
-			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
-			result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out's date must be after check out's date");
+	public String processNewVisitForm(@PathVariable("petId") int petId, @Valid RoomBooking r, BindingResult result,
+			Map<String, Object> model) {
+		RoomBooking roomBooking = new RoomBooking();
+		Pet pet = petService.findPetById(petId);
+		roomBooking.setCheckIn(r.getCheckIn());
+		roomBooking.setCheckOut(r.getCheckOut());
+		roomBooking.setPet(pet);
+		if (result.hasErrors()) {
 			return "pets/createRoomBookingForm";
-		} else if(!c1 && c2) {
-			result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out's date must be after check out's date");
+		}
+		boolean c1 = roomBooking.getCheckIn().isBefore(LocalDate.now());
+		boolean c2 = roomBooking.getCheckOut().isBefore(roomBooking.getCheckIn());
+		try {
+			roomBookingService.save(roomBooking);
+		} catch (IncorrectDatesException e1) {
+			if (c1 && c2) {
+				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
+				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
+				return "pets/createRoomBookingForm";
+			} else if (!c1 && c2) {
+				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
+				return "pets/createRoomBookingForm";
+			} else if (c1 && !c2) {
+				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
+				return "pets/createRoomBookingForm";
+			}
+		} catch (ConcurrentBookingException e2) {
+			result.rejectValue("checkIn", "error.ConcurrentBooking", "You can not book a room concurrently");
+			result.rejectValue("checkOut", "error.ConcurrentBooking", "You can not book a room concurrently");
 			return "pets/createRoomBookingForm";
-		} else if(c1 && !c2) {
-			result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
-			return "pets/createRoomBookingForm";
-		} else {
-			this.petService.saveRoomBooking(r);
 		}
 
 		return "redirect:/owners/{ownerId}";

@@ -22,10 +22,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.RoomBooking;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetRepository;
-import org.springframework.samples.petclinic.repository.RoomBookingRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Service;
@@ -42,16 +40,12 @@ import org.springframework.util.StringUtils;
 public class PetService {
 
 	private PetRepository petRepository;
-
 	private VisitRepository visitRepository;
-	private RoomBookingRepository roomBookingRepository;
 
 	@Autowired
-	public PetService(PetRepository petRepository, VisitRepository visitRepository,
-			RoomBookingRepository roomBookingRepository) {
+	public PetService(PetRepository petRepository, VisitRepository visitRepository) {
 		this.petRepository = petRepository;
 		this.visitRepository = visitRepository;
-		this.roomBookingRepository = roomBookingRepository;
 	}
 
 	@Transactional(readOnly = true)
@@ -62,11 +56,6 @@ public class PetService {
 	@Transactional
 	public void saveVisit(Visit visit) throws DataAccessException {
 		visitRepository.save(visit);
-	}
-
-	@Transactional
-	public void saveRoomBooking(RoomBooking roomBooking) {
-		roomBookingRepository.save(roomBooking);
 	}
 
 	@Transactional(readOnly = true)

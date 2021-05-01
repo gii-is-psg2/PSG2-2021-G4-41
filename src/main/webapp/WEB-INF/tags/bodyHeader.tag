@@ -2,6 +2,6 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <%@ attribute name="menuName" required="true" rtexprvalue="true"
-              description="Name of the active menu: home, owners, vets, adoptions or error" %>
+              description="Name of the active menu: home, owners, vets, adoptions, causes or error" %>
 
 <petclinic:menu name="${menuName}"/>

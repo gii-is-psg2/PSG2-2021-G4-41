@@ -29,13 +29,11 @@ public class AdoptionController {
 
     private final AdoptionService adoptionService;
     private final OwnerService ownerService;
-    private final UserService userService;
 
     @Autowired
-    public AdoptionController(AdoptionService adoptionService, OwnerService ownerService, UserService userService) {
+    public AdoptionController(AdoptionService adoptionService, OwnerService ownerService) {
         this.adoptionService = adoptionService;
         this.ownerService = ownerService;
-        this.userService = userService;
     }
 
     private Owner loggedOwner() {

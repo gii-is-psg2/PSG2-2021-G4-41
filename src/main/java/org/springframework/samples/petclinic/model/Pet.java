@@ -64,7 +64,7 @@ public class Pet extends NamedEntity {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<RoomBooking> roomBookings;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
@@ -144,7 +144,6 @@ public class Pet extends NamedEntity {
 
 	/* Auxiliar */
 	public long getAge() {
-
 		return ChronoUnit.YEARS.between(this.birthDate, LocalDate.now());
 	}
 
