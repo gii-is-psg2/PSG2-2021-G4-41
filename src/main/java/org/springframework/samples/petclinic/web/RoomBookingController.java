@@ -50,7 +50,7 @@ public class RoomBookingController {
 		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
 		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
 		try {
-			this.roomBookingService.save(r);
+			this.(r);
 		} catch (IncorrectDatesException e1) {
 			if (c1 && c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
