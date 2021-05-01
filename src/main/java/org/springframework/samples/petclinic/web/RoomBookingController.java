@@ -42,20 +42,6 @@ public class RoomBookingController {
 		return "pets/createRoomBookingForm";
 	}
 
-	// @PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	// public String processNewVisitForm(@Valid RoomBooking r, BindingResult result)
-	// {
-	// if (result.hasErrors() || !(r.getCheckOut().isAfter(r.getCheckIn()))) {
-	// result.rejectValue("checkOut", "error.IncorrectCheckOut", "La fecha de fin
-	// debe ser posterior a la fecha de inicio");
-	// return "pets/createRoomBookingForm";
-	// } else {
-	// this.petService.saveRoomBooking(r);
-	// }
-	//
-	// return "redirect:/owners/{ownerId}";
-	// }
-
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
 	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result) {
 
