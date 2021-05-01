@@ -56,7 +56,7 @@
                 <th>Check In</th>
                 <th>Check Out</th>
             </tr>
-            <c:forEach var="roomBooking" items="${roomBooking.pet.roomBookings}">
+            <c:forEach var="roomBooking" items="${pet.roomBookings}">
                 <c:if test="${!roomBooking['new']}">
                     <tr>
                         <td><petclinic:localDate date="${roomBooking.checkIn}" pattern="yyyy/MM/dd"/></td>

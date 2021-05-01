@@ -30,11 +30,15 @@ public class RoomBookingController {
 	}
 
 	@ModelAttribute("roomBooking")
-	public RoomBooking loadPetWithRoomBooking(@PathVariable("petId") int petId) {
-		Pet pet = this.petService.findPetById(petId);
+	public RoomBooking loadRoomBooking() {
 		RoomBooking roomBooking = new RoomBooking();
-		pet.addRoomBooking(roomBooking);
 		return roomBooking;
+	}
+
+	@ModelAttribute("pet")
+	public Pet loadPet(@PathVariable("petId") int petId) {
+		Pet pet = petService.findPetById(petId);
+		return pet;
 	}
 
 	@GetMapping(value = "/owners/*/pets/{petId}/roomBookings/new")
@@ -43,14 +47,20 @@ public class RoomBookingController {
 	}
 
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
-	public String processNewVisitForm(@Valid RoomBooking r, BindingResult result, Map<String, Object> model) {
+	public String processNewVisitForm(@PathVariable("petId") int petId, @Valid RoomBooking r, BindingResult result,
+			Map<String, Object> model) {
+		RoomBooking roomBooking = new RoomBooking();
+		Pet pet = petService.findPetById(petId);
+		roomBooking.setCheckIn(r.getCheckIn());
+		roomBooking.setCheckOut(r.getCheckOut());
+		roomBooking.setPet(pet);
 		if (result.hasErrors()) {
 			return "pets/createRoomBookingForm";
 		}
-		boolean c1 = r.getCheckIn().isBefore(LocalDate.now());
-		boolean c2 = r.getCheckOut().isBefore(r.getCheckIn());
+		boolean c1 = roomBooking.getCheckIn().isBefore(LocalDate.now());
+		boolean c2 = roomBooking.getCheckOut().isBefore(roomBooking.getCheckIn());
 		try {
-			this.(r);
+			roomBookingService.save(roomBooking);
 		} catch (IncorrectDatesException e1) {
 			if (c1 && c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
