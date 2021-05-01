@@ -16,6 +16,7 @@ import org.springframework.samples.petclinic.service.AdoptionService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.petclinic.service.exceptions.ForbiddenException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -36,15 +37,17 @@ public class AdoptionController {
         this.ownerService = ownerService;
     }
 
-    private Owner loggedOwner() {
+    private Owner loggedOwner() throws ForbiddenException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Owner owner = ownerService.findOwnerByUsername(username);
+        if (owner == null)
+            throw new ForbiddenException();
         return owner;
     }
 
     @GetMapping(value = "/adoptions/requests")
-    public String listRequests(Map<String, Object> model) {
+    public String listRequests(Map<String, Object> model) throws ForbiddenException {
         Owner owner = loggedOwner();
         List<AdoptionRequest> requests = adoptionService.listAdoptionRequests().stream()
                 .filter(r -> r.getOwner() != owner && !r.isClosed()).collect(Collectors.toList());
@@ -58,15 +61,15 @@ public class AdoptionController {
     }
 
     @GetMapping(value = "/adoptions/requests/new")
-    public String initNewRequestForm(Map<String, Object> model) {
+    public String initNewRequestForm(Map<String, Object> model) throws ForbiddenException {
         model.put("pets", loggedOwner().getPets().stream().filter(p -> !p.isInAdoption()).collect(Collectors.toList()));
         model.put("newRequest", new AdoptionRequest());
         return "adoptions/createAdoptionRequest";
     }
 
     @PostMapping(value = "/adoptions/requests/new")
-    public String processNewRequestForm(@Valid AdoptionRequest request, BindingResult result,
-            Map<String, Object> model) {
+    public String processNewRequestForm(@Valid AdoptionRequest request, BindingResult result, Map<String, Object> model)
+            throws ForbiddenException {
         if (result.hasErrors() || request.getPet() == null) {
             result.rejectValue("pet", "error.incorrectPet", "Pet needed, maybe any available");
             return "adoptions/createAdoptionRequest";
@@ -97,7 +100,8 @@ public class AdoptionController {
 
     @PostMapping(value = "/adoptions/requests/{requestId}/applications/new")
     public String processNewApplicationForm(@PathVariable("requestId") Integer requestId,
-            @Valid AdoptionApplication application, BindingResult result, Map<String, Object> model) {
+            @Valid AdoptionApplication application, BindingResult result, Map<String, Object> model)
+            throws ForbiddenException {
         if (result.hasErrors()) {
             model.put("newApplication", application);
             return "adoptions/createAdoptionApplication";
@@ -114,7 +118,7 @@ public class AdoptionController {
     }
 
     @GetMapping(value = "/adoptions/requests/{requestId}/applications/{applicationId}/confirm")
-    public String confirmApplication(@PathVariable("applicationId") Integer applicationId) {
+    public String confirmApplication(@PathVariable("applicationId") Integer applicationId) throws ForbiddenException {
         AdoptionApplication application = adoptionService.findApplicationById(applicationId);
         if (application.getRequest().getPet().getOwner() == this.loggedOwner()) {
             try {
