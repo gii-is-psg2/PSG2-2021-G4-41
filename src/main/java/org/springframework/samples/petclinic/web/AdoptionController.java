@@ -101,7 +101,7 @@ public class AdoptionController {
     public String processNewApplicationForm(@PathVariable("requestId") Integer requestId,
             @Valid AdoptionApplication application, BindingResult result, Map<String, Object> model) {
         if (result.hasErrors()) {
-            result.rejectValue("description", "error.incorrectDescription", "Description needed");
+            model.put("newApplication", application);
             return "adoptions/createAdoptionApplication";
         } else {
             AdoptionRequest request = adoptionService.findRequestById(requestId);
