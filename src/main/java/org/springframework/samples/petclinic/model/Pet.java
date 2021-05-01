@@ -67,6 +67,13 @@ public class Pet extends NamedEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<RoomBooking> roomBookings;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+	private Set<AdoptionRequest> requests;
+
+	public Boolean isInAdoption() {
+		return this.requests.stream().anyMatch(r -> !r.isClosed());
+	}
+
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}

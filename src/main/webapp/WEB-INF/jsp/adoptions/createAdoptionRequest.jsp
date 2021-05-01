@@ -13,17 +13,15 @@
 	
     <form:form modelAttribute="newRequest" class="form-horizontal">
         <div class="form-group has-feedback">
-        	<petclinic:inputField label="Date" name="timestamp"/>
-        	<%--  
-        	<label for="requestPets">Pets:</label> <select multiple
-				name="requestPets" id="requestPets">
-				<c:forEach items="${requestPets}" var="requestPets">
-					<option value="${requestPets.id}">
-						<c:out value="${requestPets.name}"/>
+        	<label for="requestPets">Pets:</label> 
+			<select multiple
+				name="pet" id="pet">
+				<c:forEach items="${pets}" var="pet">
+					<option value="${pet.id}">
+						<c:out value="${pet.name}"/>
 					</option>
 				</c:forEach>
 				</select>
-			 --%>
             
         </div>
         <div class="form-group">
