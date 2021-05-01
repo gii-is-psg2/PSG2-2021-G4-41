@@ -7,9 +7,9 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner2','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (10,'owner2','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner3','0wn3r',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (4,'owner3','owner');
+INSERT INTO authorities(id,username,authority) VALUES (11,'owner3','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner4','0wn3r',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (5,'owner4','owner');
+INSERT INTO authorities(id,username,authority) VALUES (12,'owner4','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner5','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'owner5','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner6','0wn3r',TRUE);
@@ -18,6 +18,12 @@ INSERT INTO users(username,password,enabled) VALUES ('owner7','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (8,'owner7','owner');
 INSERT INTO users(username,password,enabled) VALUES ('owner8','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (9,'owner8','owner');
+
+INSERT INTO users(username,password,enabled) VALUES ('jesvarzam','1234',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'jesvarzam','owner');
+
+INSERT INTO users(username,password,enabled) VALUES ('guilopros','5678',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (5,'guilopros','owner');
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
@@ -84,3 +90,9 @@ INSERT INTO requests(id,pet_id,owner_id) VALUES (4, 4, 3);
 
 INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (1, 0, 'New application', 1, 3);
 INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (2, 0, 'New application 2', 1, 4);
+INSERT INTO causes(id,name,description,target,organization,open) VALUES (1,'Dogs shelter','Donate for making possible to build a dog´s shelter',1000,'ETSII',true);
+INSERT INTO causes(id,name,description,target,organization,open) VALUES (2,'Cats shelter','Donate for making possible to build a cat´s shelter',1000,'US',true);
+
+INSERT INTO donations(id,amount,donation_date,cause_id, user_id) VALUES (1,100,'2021-02-01',1,'jesvarzam');
+INSERT INTO donations(id,amount,donation_date,cause_id, user_id) VALUES (2,100,'2021-02-01',2, 'guilopros');
+

@@ -1,11 +1,9 @@
 package org.springframework.samples.petclinic.service;
 
-import java.time.LocalDate;
-
-import javax.validation.ConstraintViolationException;
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
