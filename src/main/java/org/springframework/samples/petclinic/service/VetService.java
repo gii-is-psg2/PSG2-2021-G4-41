@@ -67,7 +67,7 @@ public class VetService {
 
 	@Transactional(readOnly = true)
 	public Vet findVetById(Integer id) throws DataAccessException {
-		return vetRepository.findById(id).get();
+		return vetRepository.findById(id);
 	}
 
 	@Transactional(readOnly = true)

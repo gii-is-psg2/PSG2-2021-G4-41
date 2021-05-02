@@ -26,96 +26,94 @@ public class Cause extends BaseEntity {
 	@NotEmpty
 	@Column(name = "name")
 	private String name;
-	
+
 	@NotEmpty
 	@Column(name = "description")
 	private String description;
-	
+
 	@NotNull
 	@Positive
 	@Column(name = "target")
 	@Range(min = 500, max = 5000)
 	private Double target;
 
-	private Double donated;
-	
 	@NotEmpty
 	@Column(name = "organization")
 	private String organization;
-	
+
 	private Boolean open;
-	
-	//	
+
+	//
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cause")
 	private Set<Donation> donations;
-	//	
-	
+	//
+
 	public String getName() {
 		return this.name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 	public String getDescription() {
 		return this.description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
 	public Double getTarget() {
 		return this.target;
 	}
+
 	public void setTarget(Double target) {
 		this.target = target;
 	}
-	
-	
+
 	public String getOrganization() {
 		return this.organization;
 	}
+
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
-	
-	//	
-	
+
 	protected Set<Donation> getDonationsInternal() {
 		if (this.donations == null) {
 			this.donations = new HashSet<>();
 		}
 		return this.donations;
 	}
+
 	protected void setDonationsInternal(Set<Donation> donations) {
 		this.donations = donations;
 	}
+
 	public List<Donation> getDonations() {
 		List<Donation> sortedDonations = new ArrayList<>(getDonationsInternal());
 		PropertyComparator.sort(sortedDonations, new MutableSortDefinition("date", true, true));
 		return Collections.unmodifiableList(sortedDonations);
 	}
+
 	public void setDonations(List<Donation> donations) {
 		setDonationsInternal(new HashSet<>(donations));
 	}
-	
+
 	public Double getDonated() {
 		List<Donation> donations = getDonations();
 		Double amount = 0.;
-		for(Donation d: donations) {
-			amount+=d.getAmount();
+		for (Donation d : donations) {
+			amount += d.getAmount();
 		}
 		return amount;
 	}
-	public void setDonated(Double donated) {
-		this.donated = donated;
-	}
-	
+
 	public Boolean getOpen() {
 		return this.open;
 	}
+
 	public void setOpen(Boolean open) {
 		this.open = open;
 	}
