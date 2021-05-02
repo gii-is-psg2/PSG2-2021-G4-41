@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="createAdoptionRequest">    
+<petclinic:layout pageName="adoptions">    
     <jsp:body>
 
 	<h2><c:if test="${requests['new']}"></c:if>New Adoption Application</h2>
