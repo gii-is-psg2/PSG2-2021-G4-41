@@ -67,14 +67,13 @@ public class RoomBookingController {
 			if (c1 && c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
 				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
-				return CREATE_FORM;
 			} else if (!c1 && c2) {
 				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
-				return CREATE_FORM;
 			} else if (c1 && !c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
-				return CREATE_FORM;
-			}
+			} else
+				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Unknown date problems");
+			return CREATE_FORM;
 		} catch (ConcurrentBookingException e2) {
 			result.rejectValue("checkIn", "error.ConcurrentBooking", "You can not book a room concurrently");
 			result.rejectValue("checkOut", "error.ConcurrentBooking", "You can not book a room concurrently");

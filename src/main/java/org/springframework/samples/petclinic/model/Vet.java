@@ -82,9 +82,4 @@ public class Vet extends Person {
 	public void addSpecialty(Specialty specialty) {
 		getSpecialtiesInternal().add(specialty);
 	}
-
-	public void addSpecialtyById(Integer specialty) {
-		return;
-	}
-
 }

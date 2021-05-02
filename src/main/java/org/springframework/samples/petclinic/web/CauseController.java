@@ -82,7 +82,7 @@ public class CauseController {
 			d.setDate(LocalDate.now());
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String username = authentication.getName();
-			User user = userService.findUser(username).get();
+			User user = userService.findUser(username);
 			d.setUser(user);
 			causeService.saveDonation(d);
 			m.addAttribute("message", "Donation made correctly");
