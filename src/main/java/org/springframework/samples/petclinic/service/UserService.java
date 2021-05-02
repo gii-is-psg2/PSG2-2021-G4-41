@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.service;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +45,13 @@ public class UserService {
 		user.setEnabled(true);
 		userRepository.save(user);
 	}
-	
+
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
 	}
+
+	public User findUserByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
 }

@@ -29,6 +29,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -63,8 +64,15 @@ public class Pet extends NamedEntity {
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
 	private Set<RoomBooking> roomBookings;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
+	private Set<AdoptionRequest> requests;
+
+	public Boolean isInAdoption() {
+		return this.requests.stream().anyMatch(r -> !r.getIsClosed());
+	}
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -86,7 +94,7 @@ public class Pet extends NamedEntity {
 		return this.owner;
 	}
 
-	protected void setOwner(Owner owner) {
+	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
 
@@ -113,7 +121,7 @@ public class Pet extends NamedEntity {
 		PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
 		return Collections.unmodifiableList(sortedVisits);
 	}
-	
+
 	public void setVisits(Set<Visit> visits) {
 		this.visits = visits;
 	}
@@ -132,6 +140,11 @@ public class Pet extends NamedEntity {
 	public void addRoomBooking(RoomBooking roomBooking) {
 		getRoomBookingsInternal().add(roomBooking);
 		roomBooking.setPet(this);
+	}
+
+	/* Auxiliar */
+	public long getAge() {
+		return ChronoUnit.YEARS.between(this.birthDate, LocalDate.now());
 	}
 
 }
