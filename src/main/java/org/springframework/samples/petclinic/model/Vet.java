@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -87,5 +86,5 @@ public class Vet extends Person {
 	public void addSpecialtyById(Integer specialty) {
 		return;
 	}
-	
+
 }

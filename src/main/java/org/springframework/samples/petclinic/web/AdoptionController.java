@@ -30,6 +30,8 @@ public class AdoptionController {
     private final AdoptionService adoptionService;
     private final OwnerService ownerService;
 
+    private static final String REDIRECT_TO_REQUESTS = "redirect:/adoptions/requests";
+
     @Autowired
     public AdoptionController(AdoptionService adoptionService, OwnerService ownerService) {
         this.adoptionService = adoptionService;
@@ -76,7 +78,7 @@ public class AdoptionController {
             newRequest.setPet(request.getPet());
             newRequest.setIsClosed(false);
             adoptionService.saveAdoptionRequest(newRequest);
-            return "redirect:/adoptions/requests";
+            return REDIRECT_TO_REQUESTS;
         }
     }
 
@@ -111,7 +113,7 @@ public class AdoptionController {
             newApplication.setDescription(application.getDescription());
             newApplication.setRequest(request);
             adoptionService.saveAdoptionApplication(newApplication);
-            return "redirect:/adoptions/requests";
+            return REDIRECT_TO_REQUESTS;
         }
     }
 
@@ -121,7 +123,7 @@ public class AdoptionController {
         if (application.getRequest().getPet().getOwner() == this.loggedOwner()) {
             try {
                 adoptionService.confirmApplication(application);
-                return "redirect:/adoptions/requests";
+                return REDIRECT_TO_REQUESTS;
             } catch (DataAccessException | DuplicatedPetNameException e) {
                 return "redirect:/oups";
             }
