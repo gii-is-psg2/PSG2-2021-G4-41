@@ -82,10 +82,10 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO requests(id,pet_id,owner_id) VALUES (1, 1, 1);
-INSERT INTO requests(id,pet_id,owner_id) VALUES (2, 3, 3);
-INSERT INTO requests(id,pet_id,owner_id) VALUES (3, 2, 2);
-INSERT INTO requests(id,pet_id,owner_id) VALUES (4, 4, 3);
+INSERT INTO requests(id, is_closed, pet_id,owner_id) VALUES (1, false, 1, 1);
+INSERT INTO requests(id, is_closed, pet_id,owner_id) VALUES (2, false, 3, 3);
+INSERT INTO requests(id, is_closed, pet_id,owner_id) VALUES (3, false, 2, 2);
+INSERT INTO requests(id, is_closed, pet_id,owner_id) VALUES (4, false, 4, 3);
 
 INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (1, 0, 'New application', 1, 3);
 INSERT INTO applications(id, approved, description, request_id, owner_id) VALUES (2, 0, 'New application 2', 1, 4);

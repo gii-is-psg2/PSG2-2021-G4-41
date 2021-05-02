@@ -13,7 +13,7 @@
         <tr>
             <th style="width: 150px;">Name</th>
             <th style="width: 150px;">Target</th>
-            <th style="width: 150px;">Amount reached until now</th>
+            <th style="width: 150px;">Reached</th>
         </tr>
         </thead>
         <tbody>

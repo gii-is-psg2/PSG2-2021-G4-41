@@ -71,7 +71,7 @@ public class Pet extends NamedEntity {
 	private Set<AdoptionRequest> requests;
 
 	public Boolean isInAdoption() {
-		return this.requests.stream().anyMatch(r -> !r.isClosed());
+		return this.requests.stream().anyMatch(r -> !r.getIsClosed());
 	}
 
 	public void setBirthDate(LocalDate birthDate) {
