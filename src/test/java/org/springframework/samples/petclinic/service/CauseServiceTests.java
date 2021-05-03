@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
@@ -60,7 +59,7 @@ public class CauseServiceTests {
 
 		causeService.saveCause(c);
 		causeService.saveDonation(d);
-		assertTrue(causeService.findDonationsByCauseId(1).get(0).getAmount() == 100);
+		assertEquals(causeService.findDonationsByCauseId(1).get(0).getAmount(), 100);
 
 	}
 
@@ -88,6 +87,6 @@ public class CauseServiceTests {
 		causeService.saveCause(c);
 		causeService.saveDonation(d);
 		System.out.println(causeService.findCauseById(1).getOpen());
-		assertTrue(causeService.findCauseById(1).getOpen().equals(false));
+		assertEquals(causeService.findCauseById(1).getOpen(), false);
 	}
 }

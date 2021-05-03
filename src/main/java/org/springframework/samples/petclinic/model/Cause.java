@@ -43,10 +43,8 @@ public class Cause extends BaseEntity {
 
 	private Boolean open;
 
-	//
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cause")
 	private Set<Donation> donations;
-	//
 
 	public String getName() {
 		return this.name;
@@ -102,9 +100,8 @@ public class Cause extends BaseEntity {
 	}
 
 	public Double getDonated() {
-		List<Donation> donations = getDonations();
 		Double amount = 0.;
-		for (Donation d : donations) {
+		for (Donation d : getDonationsInternal()) {
 			amount += d.getAmount();
 		}
 		return amount;

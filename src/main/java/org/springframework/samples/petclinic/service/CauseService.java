@@ -52,7 +52,6 @@ public class CauseService {
 		Double donated = findBudgetTarget(donation.getCause().getId()) + donation.getAmount();
 		Double target = donation.getCause().getTarget();
 		if (donated >= target) {
-			// donation.getCause().setOpen(false);
 			causeRepository.findById(donation.getCause().getId()).setOpen(false);
 		}
 		donationRepository.save(donation);
