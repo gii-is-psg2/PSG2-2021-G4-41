@@ -16,7 +16,7 @@ import org.springframework.samples.petclinic.service.exceptions.IncorrectDatesEx
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class RoomBookingServiceTests {
+class RoomBookingServiceTests {
 
 	@Autowired
 	protected PetService petService;

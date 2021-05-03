@@ -33,14 +33,12 @@ public class RoomBookingController {
 
 	@ModelAttribute("roomBooking")
 	public RoomBooking loadRoomBooking() {
-		RoomBooking roomBooking = new RoomBooking();
-		return roomBooking;
+		return new RoomBooking();
 	}
 
 	@ModelAttribute("pet")
 	public Pet loadPet(@PathVariable("petId") int petId) {
-		Pet pet = petService.findPetById(petId);
-		return pet;
+		return petService.findPetById(petId);
 	}
 
 	@GetMapping(value = "/owners/*/pets/{petId}/roomBookings/new")
