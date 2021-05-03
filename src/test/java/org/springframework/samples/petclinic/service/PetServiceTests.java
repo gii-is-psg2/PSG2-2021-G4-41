@@ -96,7 +96,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertPetIntoDatabaseAndGenerateId() {
+	void shouldInsertPetIntoDatabaseAndGenerateId() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		int found = owner6.getPets().size();
 
@@ -124,7 +124,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldThrowExceptionInsertingPetsWithTheSameName() {
+	void shouldThrowExceptionInsertingPetsWithTheSameName() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		Pet pet = new Pet();
 		pet.setId(11);
@@ -153,7 +153,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldUpdatePetName() throws Exception {
+	void shouldUpdatePetName() throws Exception {
 		Pet pet7 = this.petService.findPetById(7);
 		String oldName = pet7.getName();
 
@@ -167,7 +167,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldThrowExceptionUpdatingPetsWithTheSameName() {
+	void shouldThrowExceptionUpdatingPetsWithTheSameName() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		Pet pet = new Pet();
 		pet.setId(12);
@@ -200,7 +200,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldAddNewVisitForPet() {
+	void shouldAddNewVisitForPet() {
 		Pet pet7 = this.petService.findPetById(7);
 		int found = pet7.getVisits().size();
 		Visit visit = new Visit();

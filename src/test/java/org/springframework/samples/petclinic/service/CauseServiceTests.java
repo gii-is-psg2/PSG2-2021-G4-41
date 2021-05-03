@@ -14,7 +14,7 @@ import org.springframework.samples.petclinic.model.Donation;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class CauseServiceTests {
+class CauseServiceTests {
 
 	@Autowired
 	protected CauseService causeService;
@@ -32,7 +32,7 @@ public class CauseServiceTests {
 
 		causeService.saveCause(c);
 
-		assertEquals(causeService.findCauseById(1).getName(), "prueba");
+		assertEquals("prueba", causeService.findCauseById(1).getName());
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class CauseServiceTests {
 
 		causeService.saveCause(c);
 		causeService.saveDonation(d);
-		assertEquals(causeService.findDonationsByCauseId(1).get(0).getAmount(), 100);
+		assertEquals(100, causeService.findDonationsByCauseId(1).get(0).getAmount());
 
 	}
 
@@ -86,7 +86,6 @@ public class CauseServiceTests {
 
 		causeService.saveCause(c);
 		causeService.saveDonation(d);
-		System.out.println(causeService.findCauseById(1).getOpen());
-		assertEquals(causeService.findCauseById(1).getOpen(), false);
+		assertEquals(false, causeService.findCauseById(1).getOpen());
 	}
 }

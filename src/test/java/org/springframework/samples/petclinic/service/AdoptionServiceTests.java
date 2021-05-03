@@ -26,13 +26,13 @@ class AdoptionServiceTests {
 		AdoptionRequest adoption = EntityUtils.getById(AdoptionRequest, AdoptionRequest.class, 1);
 		assertEquals(adoption.getPet(), adoption.getPet());
 		assertEquals(adoption.getOwner(), adoption.getOwner());
-		assertEquals(adoption.getId(), 1);
+		assertEquals(1, adoption.getId());
 	}
 
 	@Test
 	void shouldFindApplicationById() {
 		AdoptionApplication adoptionId = this.adoptionService.findApplicationById(1);
-		assertEquals(adoptionId.getId(), 1);
+		assertEquals(1, adoptionId.getId());
 	}
 
 }
