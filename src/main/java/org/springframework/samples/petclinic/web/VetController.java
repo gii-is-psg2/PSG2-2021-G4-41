@@ -44,7 +44,7 @@ import javax.validation.Valid;
 public class VetController {
 
     private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
-
+    private static final String REDIRECTION_TO_VETS = "redirect:/vets";
     private final VetService vetService;
 
     @Autowired
@@ -96,7 +96,7 @@ public class VetController {
                 break;
             }
         }
-        return "redirect:/vets";
+        return REDIRECTION_TO_VETS;
     }
 
     @GetMapping(value = "/vets/new")
@@ -112,7 +112,7 @@ public class VetController {
             return VIEWS_VET_CREATE_OR_UPDATE_FORM;
         } else {
             this.vetService.saveVet(vet);
-            return "redirect:/vets";
+            return REDIRECTION_TO_VETS;
         }
     }
 
@@ -132,7 +132,7 @@ public class VetController {
         } else {
             vet.setId(vetId);
             this.vetService.saveVet(vet);
-            return "redirect:/vets";
+            return REDIRECTION_TO_VETS;
         }
     }
 }

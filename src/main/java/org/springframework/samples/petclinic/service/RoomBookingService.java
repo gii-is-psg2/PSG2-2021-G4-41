@@ -38,7 +38,7 @@ public class RoomBookingService {
 
 	@Transactional
 	public List<RoomBooking> findAll() throws DataAccessException {
-		return (List<RoomBooking>) roomBookingRP.findAll();
+		return roomBookingRP.findAll();
 	}
 
 }

@@ -23,6 +23,8 @@ public class RoomBookingController {
 	private final PetService petService;
 	private final RoomBookingService roomBookingService;
 
+	private static final String CREATE_FORM = "pets/createRoomBookingForm";
+
 	@Autowired
 	public RoomBookingController(PetService petService, RoomBookingService roomBookingService) {
 		this.petService = petService;
@@ -31,19 +33,17 @@ public class RoomBookingController {
 
 	@ModelAttribute("roomBooking")
 	public RoomBooking loadRoomBooking() {
-		RoomBooking roomBooking = new RoomBooking();
-		return roomBooking;
+		return new RoomBooking();
 	}
 
 	@ModelAttribute("pet")
 	public Pet loadPet(@PathVariable("petId") int petId) {
-		Pet pet = petService.findPetById(petId);
-		return pet;
+		return petService.findPetById(petId);
 	}
 
 	@GetMapping(value = "/owners/*/pets/{petId}/roomBookings/new")
 	public String initNewBookingForm(@PathVariable("petId") int petId, Map<String, Object> model) {
-		return "pets/createRoomBookingForm";
+		return CREATE_FORM;
 	}
 
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/roomBookings/new")
@@ -55,7 +55,7 @@ public class RoomBookingController {
 		roomBooking.setCheckOut(r.getCheckOut());
 		roomBooking.setPet(pet);
 		if (result.hasErrors()) {
-			return "pets/createRoomBookingForm";
+			return CREATE_FORM;
 		}
 		boolean c1 = roomBooking.getCheckIn().isBefore(LocalDate.now());
 		boolean c2 = roomBooking.getCheckOut().isBefore(roomBooking.getCheckIn());
@@ -65,18 +65,17 @@ public class RoomBookingController {
 			if (c1 && c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
 				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
-				return "pets/createRoomBookingForm";
 			} else if (!c1 && c2) {
 				result.rejectValue("checkOut", "error.IncorrectCheckOut", "Check out date must be after check in date");
-				return "pets/createRoomBookingForm";
 			} else if (c1 && !c2) {
 				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Check in's date must be after today's date");
-				return "pets/createRoomBookingForm";
-			}
+			} else
+				result.rejectValue("checkIn", "error.IncorrectCheckIn", "Unknown date problems");
+			return CREATE_FORM;
 		} catch (ConcurrentBookingException e2) {
 			result.rejectValue("checkIn", "error.ConcurrentBooking", "You can not book a room concurrently");
 			result.rejectValue("checkOut", "error.ConcurrentBooking", "You can not book a room concurrently");
-			return "pets/createRoomBookingForm";
+			return CREATE_FORM;
 		}
 
 		return "redirect:/owners/{ownerId}";

@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,15 @@ class AdoptionServiceTests {
 		Collection<AdoptionRequest> AdoptionRequest = this.adoptionService.listAdoptionRequests();
 
 		AdoptionRequest adoption = EntityUtils.getById(AdoptionRequest, AdoptionRequest.class, 1);
-		assertThat(adoption.getPet().equals(adoption.getPet()));
-		assertThat(adoption.getOwner().equals(adoption.getOwner()));
-		assertThat(adoption.getId().equals(1));
+		assertEquals(adoption.getPet(), adoption.getPet());
+		assertEquals(adoption.getOwner(), adoption.getOwner());
+		assertEquals(1, adoption.getId());
 	}
-	
+
 	@Test
 	void shouldFindApplicationById() {
 		AdoptionApplication adoptionId = this.adoptionService.findApplicationById(1);
-		assertThat(adoptionId.getId().equals(1));
+		assertEquals(1, adoptionId.getId());
 	}
 
 }

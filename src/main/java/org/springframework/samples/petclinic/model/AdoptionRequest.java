@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.model;
 
-import java.beans.Transient;
 import java.util.Collection;
 import java.util.Date;
 
