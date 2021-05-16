@@ -34,7 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll()
+		http.authorizeRequests().antMatchers("/actuator/health/**").permitAll().antMatchers("/manage/health/**")
+				.permitAll().antMatchers("/resources/**", "/webjars/**", "/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/", "/oups").permitAll().antMatchers("/users/new").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority(adminString).antMatchers("/owners/**")
 				.hasAnyAuthority(ownerString, adminString).antMatchers("/causes/**")
