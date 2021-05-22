@@ -15,6 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -29,6 +30,7 @@ public class Cause extends BaseEntity {
 
 	@NotEmpty
 	@Column(name = "description")
+	@Length(min = 0, max = 500)
 	private String description;
 
 	@NotNull
