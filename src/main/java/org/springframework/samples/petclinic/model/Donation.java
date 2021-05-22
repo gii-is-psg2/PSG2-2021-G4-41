@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -19,6 +20,7 @@ public class Donation extends BaseEntity {
 	@NotNull
 	@Positive
 	@Column(name = "amount")
+	@Digits(integer = 6, fraction = 2, message = "The donation quantity is not valid")
 	private Double amount;
 
 	@Column(name = "donation_date")
