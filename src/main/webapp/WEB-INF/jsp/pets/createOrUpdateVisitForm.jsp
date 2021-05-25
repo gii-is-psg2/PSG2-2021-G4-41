@@ -16,13 +16,13 @@
     <jsp:body>
         <h2><c:if test="${visit['new']}">New </c:if>Visit</h2>
 
-        <b>Pet</b>
+        <b>Mascota</b>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Birth Date</th>
-                <th>Type</th>
+                <th>Nombre</th>
+                <th>Fecha de nacimiento</th>
+                <th>Tipo</th>
                 <th>Owner</th>
             </tr>
             </thead>
@@ -43,17 +43,17 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="petId" value="${visit.pet.id}"/>
-                    <button class="btn btn-default" type="submit">Add Visit</button>
+                    <button class="btn btn-default" type="submit">Añadir Visita</button>
                 </div>
             </div>
         </form:form>
 
         <br/>
-        <b>Previous Visits</b>
+        <b>Visitas Previas</b>
         <table class="table table-striped">
             <tr>
-                <th>Date</th>
-                <th>Description</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
             </tr>
             <c:forEach var="visit" items="${visit.pet.visits}">
                 <c:if test="${!visit['new']}">

@@ -11,7 +11,7 @@
     
     	 <form:form modelAttribute="donation" class="form-horizontal">
     	
-        <h2>Donation for <c:out value="${donation.cause.name}"/> cause</h2>
+        <h2>Donación para <c:out value="${donation.cause.name}"/> causa</h2>
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Amount to donate" name="amount"/>
             </div>  	
