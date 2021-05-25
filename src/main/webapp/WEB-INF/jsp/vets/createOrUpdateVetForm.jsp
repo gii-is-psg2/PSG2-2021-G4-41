@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="vets">
     <h2>
-    	<c:if test="${vet['new']}"></c:if> New Vet
+    	<c:if test="${vet['new']}"></c:if> Nuevo Vet
     </h2>
     <form:form modelAttribute="vet" class="form-horizontal" id="add-vet-form">
         <div class="form-group has-feedback">
@@ -26,10 +26,10 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${vet['new']}">
-                    <button class="btn btn-default" type="submit">Save</button>
+                    <button class="btn btn-default" type="submit">Guardar</button>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-default" type="submit">Save</button>
+						<button class="btn btn-default" type="submit">Guardar</button>
 					</c:otherwise>
                 </c:choose>
             </div>
