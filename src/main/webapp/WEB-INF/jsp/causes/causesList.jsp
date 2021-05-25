@@ -6,14 +6,14 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="causes">
-    <h2>Causes</h2>
+    <h2>Causas</h2>
 
     <table id="causesTable" class="table table-striped table-cause">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 150px;">Target</th>
-            <th style="width: 150px;">Reached</th>
+            <th style="width: 150px;">Nombre</th>
+            <th style="width: 150px;">Objetivo</th>
+            <th style="width: 150px;">Alcanzado</th>
         </tr>
         </thead>
         <tbody>
@@ -34,19 +34,19 @@
                     <spring:url value="/causes/{causeId}" var="causeUrl">
                         <spring:param name="causeId" value="${cause.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(causeUrl)}">Cause details</a>
+                    <a href="${fn:escapeXml(causeUrl)}">Detalles de la causa</a>
                 </td>
                 <c:if test="${cause.open == 'true'}">
                 <td>
                     <spring:url value="/causes/{causeId}/newDonation" var="causeUrl">
                         <spring:param name="causeId" value="${cause.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(causeUrl)}">Donate for this cause</a>
+                    <a href="${fn:escapeXml(causeUrl)}">Dona por esta causa</a>
                 </td>
                 </c:if>
                 <td>
                 <c:if test="${cause.open == 'false'}">
-                	<p>Cause closed</p>
+                	<p>Causa cerrada</p>
                 </c:if>
                 </td>
             </tr>
