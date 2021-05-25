@@ -67,9 +67,13 @@ public class CauseController {
 
 	@GetMapping(value = "/causes/{causeId}/newDonation")
 	public String initDonation(@PathVariable("causeId") int id, ModelMap m) {
-		Donation d = new Donation();
-		m.addAttribute("donation", d);
-		return "causes/newDonation";
+		Cause c = causeService.findCauseById(id);
+		if(c.getOpen()) {
+			Donation d = new Donation();
+			m.addAttribute("donation", d);
+			return "causes/newDonation";
+		}
+		return causesList(m);
 	}
 
 	@PostMapping(value = "/causes/{causeId}/newDonation")
