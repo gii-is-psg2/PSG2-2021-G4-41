@@ -51,6 +51,12 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Causas</span>
 				</petclinic:menuItem>
+
+				<petclinic:menuItem active="${name eq 'hotel'}" url="/hotel"
+					title="hotel">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					<span>Hotel</span>
+				</petclinic:menuItem>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
@@ -60,7 +66,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>ï¿½
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
