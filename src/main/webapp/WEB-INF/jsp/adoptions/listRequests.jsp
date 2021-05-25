@@ -23,12 +23,12 @@
     <table id="requestsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Pet Name</th>
-            <th>Type</th>
-            <th>Age (Years)</th>
-            <th>Location (City)</th>
+            <th>Nombre de la mascota</th>
+            <th>Tipo</th>
+            <th>Edad (Años)</th>
+            <th>Localización (Ciudad)</th>
             <th>Owner</th>
-            <th>Apply</th>
+            <th>Aplicar</th>
      
         </tr>
         </thead>
@@ -66,14 +66,14 @@
     </div>
 
     <div>
-    <h2>Adoption Applications for my Pets</h2>
+    <h2>Adoption Applications para mis Mascotas</h2>
 
     <table id="applicationsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Pet Name</th>
-            <th>Type</th>
-            <th>Age (Years)</th>
+            <th>Nombre de la Mascota</th>
+            <th>Tipo</th>
+            <th>Edad (Años)</th>
             <%--
             <th>Number of Applications</th>
             --%>
