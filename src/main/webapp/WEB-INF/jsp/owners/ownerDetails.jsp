@@ -53,6 +53,9 @@
         <c:forEach var="pet" items="${owner.pets}">
 
             <tr>
+            	<td>
+            		<img class="img-responsive" style="height:100px" src="${pet.foto}"/>
+            	</td>
                 <td valign="top">
                     <dl class="dl-horizontal">
                         <br>

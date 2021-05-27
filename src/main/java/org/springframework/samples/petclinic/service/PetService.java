@@ -65,11 +65,26 @@ public class PetService {
 
 	@Transactional(rollbackFor = DuplicatedPetNameException.class)
 	public void savePet(Pet pet) throws DataAccessException, DuplicatedPetNameException {
-		Pet otherPet = pet.getOwner().getPetwithIdDifferent(pet.getName(), pet.getId());
-		if (StringUtils.hasLength(pet.getName()) && (otherPet != null && !otherPet.getId().equals(pet.getId()))) {
+		Boolean nombreRepetido = false;
+		if(pet.getId() != null) {
+			Pet otherPet = pet.getOwner().getPetwithIdDifferent(pet.getName(), pet.getId());
+			nombreRepetido = otherPet != null && !otherPet.getId().equals(pet.getId());
+		}else {
+			for (Pet pet2 : pet.getOwner().getPets()) {
+				String compName = pet2.getName();
+				compName = compName.toLowerCase();
+				if (compName.equals(pet.getName().toLowerCase()) && !pet2.equals(pet)) {
+					nombreRepetido = true;
+					System.out.println("llega");
+					break;
+				}
+			}
+		}
+		if (StringUtils.hasLength(pet.getName()) && nombreRepetido) {
 			throw new DuplicatedPetNameException();
-		} else
+		} else {
 			petRepository.save(pet);
+		}
 	}
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
