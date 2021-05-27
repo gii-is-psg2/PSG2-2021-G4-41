@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -15,11 +16,11 @@
             <td><b><c:out value="${cause.name}"/></b></td>
         </tr>
         <tr>
-            <th>Descripción</th>
+            <th>DescripciÃ³n</th>
             <td><c:out value="${cause.description}"/></td>
         </tr>
         <tr>
-            <th>Organización</th>
+            <th>OrganizaciÃ³n</th>
             <td><c:out value="${cause.organization}"/></td>
         </tr>
         <tr>
@@ -39,7 +40,7 @@
     	<table class = "table table-striped">
     		<h4><c:out value="Donation made by ${donation.user.username}"/></h4>
     			<tr>
-    				<th>Fecha de la donación</th>
+    				<th>Fecha de la donaciÃ³n</th>
        	 			<td><petclinic:localDate date="${donation.date}" pattern="yyyy-MM-dd"/></td>
        	 		</tr>
        	 		<tr>

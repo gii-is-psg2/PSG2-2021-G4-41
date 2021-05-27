@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -6,7 +7,7 @@
 
 <petclinic:layout pageName="owners">
 
-    <h2>Informaci髇 de Owner</h2>
+    <h2>Informaci贸n de Owner</h2>
 
 
     <table class="table table-striped">
@@ -15,7 +16,7 @@
             <td><b><c:out value="${owner.firstName} ${owner.lastName}"/></b></td>
         </tr>
         <tr>
-            <th>Direcci髇</th>
+            <th>Direcci贸n</th>
             <td><c:out value="${owner.address}"/></td>
         </tr>
         <tr>
@@ -23,7 +24,7 @@
             <td><c:out value="${owner.city}"/></td>
         </tr>
         <tr>
-            <th>Tel閒ono</th>
+            <th>Tel茅fono</th>
             <td><c:out value="${owner.telephone}"/></td>
         </tr>
     </table>
@@ -36,7 +37,7 @@
     <spring:url value="{ownerId}/pets/new" var="addUrl">
         <spring:param name="ownerId" value="${owner.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">A馻dir Nueva Mascota</a>
+    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">A帽adir Nueva Mascota</a>
     
     <spring:url value="{ownerId}/delete" var="deleteUrl">
         <spring:param name="ownerId" value="${owner.id}"/>
@@ -52,6 +53,9 @@
         <c:forEach var="pet" items="${owner.pets}">
 
             <tr>
+            	<td>
+            		<img class="img-responsive" style="height:100px" src="${pet.foto}"/>
+            	</td>
                 <td valign="top">
                     <dl class="dl-horizontal">
                         <br>
@@ -82,7 +86,7 @@
                         <thead>
                         <tr>
                             <th>Fecha de visita</th>
-                            <th>Descripci髇</th>
+                            <th>Descripci贸n</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -106,7 +110,7 @@
                                     <spring:param name="ownerId" value="${owner.id}"/>
                                     <spring:param name="petId" value="${pet.id}"/>
                                 </spring:url>
-                                <a href="${fn:escapeXml(visitUrl)}">A馻dir Visita</a>
+                                <a href="${fn:escapeXml(visitUrl)}">A帽adir Visita</a>
                             </td>
                         </tr>
                         
@@ -133,7 +137,7 @@
                                         <spring:param name="ownerId" value="${owner.id}"/>
                                         <spring:param name="petId" value="${pet.id}"/>
                                     </spring:url>
-                                    <a href="${fn:escapeXml(bookingUrl)}">Reservar una habitaci髇</a>
+                                    <a href="${fn:escapeXml(bookingUrl)}">Reservar una habitaci贸n</a>
                                 </td>
                             </tr>
                     </table>

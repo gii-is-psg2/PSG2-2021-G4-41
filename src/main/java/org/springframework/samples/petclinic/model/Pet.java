@@ -27,6 +27,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -45,7 +47,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "pets")
-public class Pet extends NamedEntity {
+public class Pet extends BaseEntity {
+	
+	@Size(min = 3, max = 50)
+	@Column(name = "name")
+	private String name;
 
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -59,6 +65,9 @@ public class Pet extends NamedEntity {
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
 
+	@Column(name = "foto")
+	private String foto;
+
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 
@@ -70,6 +79,27 @@ public class Pet extends NamedEntity {
 
 	public Boolean isInAdoption() {
 		return this.requests.stream().anyMatch(r -> !r.getIsClosed());
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFoto() {
+		return this.foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	@Override
+	public String toString() {
+		return this.getName();
 	}
 
 	public void setBirthDate(LocalDate birthDate) {
