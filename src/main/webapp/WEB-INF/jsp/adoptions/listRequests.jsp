@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -25,8 +26,8 @@
         <tr>
             <th>Nombre de la mascota</th>
             <th>Tipo</th>
-            <th>Edad (Años)</th>
-            <th>Localización (Ciudad)</th>
+            <th>Edad (AÃ±os)</th>
+            <th>LocalizaciÃ³n (Ciudad)</th>
             <th>Owner</th>
             <th>Aplicar</th>
      
@@ -73,7 +74,7 @@
         <tr>
             <th>Nombre de la Mascota</th>
             <th>Tipo</th>
-            <th>Edad (Años)</th>
+            <th>Edad (AÃ±os)</th>
             <%--
             <th>Number of Applications</th>
             --%>

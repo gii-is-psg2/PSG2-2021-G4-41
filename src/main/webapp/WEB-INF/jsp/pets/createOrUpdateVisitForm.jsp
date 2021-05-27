@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,7 +44,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="petId" value="${visit.pet.id}"/>
-                    <button class="btn btn-default" type="submit">Añadir Visita</button>
+                    <button class="btn btn-default" type="submit">AÃ±adir Visita</button>
                 </div>
             </div>
         </form:form>
@@ -53,7 +54,7 @@
         <table class="table table-striped">
             <tr>
                 <th>Fecha</th>
-                <th>Descripción</th>
+                <th>DescripciÃ³n</th>
             </tr>
             <c:forEach var="visit" items="${visit.pet.visits}">
                 <c:if test="${!visit['new']}">

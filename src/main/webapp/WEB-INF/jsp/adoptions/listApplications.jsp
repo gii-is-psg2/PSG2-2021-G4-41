@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -18,7 +19,7 @@
             <td><c:out value="${request.pet.type}"/></td>
         </tr>
         <tr>
-            <th>Edad (Años)</th>
+            <th>Edad (AÃ±os)</th>
             <td><c:out value="${request.pet.getAge()}"/></td>
         </tr>
     </table>
@@ -31,10 +32,10 @@
         <thead>
         <tr>
             <th>Nuevo Nombre de Owner</th>
-            <th>Localización (Ciudad)</th>
-            <th>Descripción</th>
+            <th>LocalizaciÃ³n (Ciudad)</th>
+            <th>DescripciÃ³n</th>
             <th>Fecha</th>
-            <th>Aprobación</th>
+            <th>AprobaciÃ³n</th>
      
         </tr>
         </thead>

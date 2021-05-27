@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,9 +13,9 @@
         <thead>
         <tr>
             <th style="width: 150px;">Nombre</th>
-            <th style="width: 200px;">Dirección</th>
+            <th style="width: 200px;">DirecciÃ³n</th>
             <th>City</th>
-            <th style="width: 120px">Teléfono</th>
+            <th style="width: 120px">TelÃ©fono</th>
             <th>Mascotas</th>
         </tr>
         </thead>
