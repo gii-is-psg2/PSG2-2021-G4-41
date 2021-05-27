@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +12,7 @@
     
     	
     	
-        <h2>Cause</h2>
+        <h2>Causa</h2>
 
         
 
@@ -27,7 +28,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="id" value="${cause.id}"/>
-                    <button class="btn btn-default" type="submit">Create cause</button>
+                    <button class="btn btn-default" type="submit">Crear causa</button>
                 </div>
             </div>
         </form:form>

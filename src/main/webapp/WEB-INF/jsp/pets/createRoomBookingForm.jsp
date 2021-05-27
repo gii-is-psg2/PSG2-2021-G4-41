@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,13 +18,13 @@
     <jsp:body>
         <h2><c:if test="${roomBooking['new']}">New </c:if>Room Bookings</h2>
 
-        <b>Pet</b>
+        <b>Mascota</b>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Birth Date</th>
-                <th>Type</th>
+                <th>Nombre</th>
+                <th>Fecha de nacimiento</th>
+                <th>Tipo</th>
                 <th>Owner</th>
             </tr>
             </thead>
@@ -50,7 +51,7 @@
         </form:form>
 
         <br/>
-        <b>Previous Room Bookings</b>
+        <b>Reservas de habitaciones previas</b>
         <table class="table table-striped">
             <tr>
                 <th>Check In</th>

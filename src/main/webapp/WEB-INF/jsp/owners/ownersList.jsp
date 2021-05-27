@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -11,11 +12,11 @@
     <table id="ownersTable" class="table table-striped table-owner">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Address</th>
+            <th style="width: 150px;">Nombre</th>
+            <th style="width: 200px;">Dirección</th>
             <th>City</th>
-            <th style="width: 120px">Telephone</th>
-            <th>Pets</th>
+            <th style="width: 120px">Teléfono</th>
+            <th>Mascotas</th>
         </tr>
         </thead>
         <tbody>

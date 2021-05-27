@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -10,14 +11,14 @@
 
 <petclinic:layout pageName="owners">
 
-    <h2>Find Owners</h2>
+    <h2>Encontrar Owners</h2>
 
     
     <form:form modelAttribute="owner" action="/owners" method="get" class="form-horizontal"
                id="search-owner-form">
         <div class="form-group">
             <div class="control-group" id="lastName">
-                <label class="col-sm-2 control-label">Last name </label>
+                <label class="col-sm-2 control-label">Apellido </label>
                 <div class="col-sm-10">
                     <form:input class="form-control" path="lastName" size="30" maxlength="80"/>
                     <span class="help-inline"><form:errors path="*"/></span>
@@ -25,8 +26,17 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="control-group" id="firstName">
+                <label class="col-sm-2 control-label">Nombre </label>
+                <div class="col-sm-10">
+                    <form:input class="form-control" path="firstName" size="30" maxlength="80"/>
+                    <span class="help-inline"><form:errors path="*"/></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Find Owner</button>
+                <button type="submit" class="btn btn-default">Encontrar Owner</button>
             </div>
         </div>
 

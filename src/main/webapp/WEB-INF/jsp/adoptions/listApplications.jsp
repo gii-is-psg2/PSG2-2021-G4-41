@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -10,15 +11,15 @@
 	<div>
 	<table class="table table-striped">
         <tr>
-            <th>Pet Name</th>
+            <th>Nombre de la mascota</th>
             <td><c:out value="${request.pet.name}"/></td>
         </tr>
         <tr>
-            <th>Type</th>
+            <th>Tipo</th>
             <td><c:out value="${request.pet.type}"/></td>
         </tr>
         <tr>
-            <th>Age (Years)</th>
+            <th>Edad (Años)</th>
             <td><c:out value="${request.pet.getAge()}"/></td>
         </tr>
     </table>
@@ -30,11 +31,11 @@
     <table id="applicationsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>New Owner Name</th>
-            <th>Location (City)</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Approve</th>
+            <th>Nuevo Nombre de Owner</th>
+            <th>Localización (Ciudad)</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Aprobación</th>
      
         </tr>
         </thead>
