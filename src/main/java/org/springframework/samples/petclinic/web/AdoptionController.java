@@ -69,9 +69,10 @@ public class AdoptionController {
     @PostMapping(value = "/adoptions/requests/new")
     public String processNewRequestForm(@Valid AdoptionRequest request, BindingResult result, Map<String, Object> model)
             throws ForbiddenException {
-        if (result.hasErrors() || request.getPet() == null) {
+        if (result.hasErrors() || request.getPet() == null 
+        		|| loggedOwner().getPets().stream().filter(x-> x.getId()==request.getPet().getId()).collect(Collectors.toList()).size()==0) {
             result.rejectValue("pet", "error.incorrectPet", "Pet needed, maybe any available");
-            return "adoptions/createAdoptionRequest";
+            return initNewRequestForm(model);
         } else {
             AdoptionRequest newRequest = new AdoptionRequest();
             newRequest.setOwner(this.loggedOwner());
