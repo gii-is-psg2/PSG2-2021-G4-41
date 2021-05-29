@@ -29,11 +29,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
-
+import org.springframework.samples.petclinic.service.exceptions.ForbiddenException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * @author Juergen Hoeller
  * @author Ken Krebs
@@ -48,11 +54,13 @@ public class PetController {
 
 	private final PetService petService;
 	private final OwnerService ownerService;
+	private final OwnerController ownerController;
 
 	@Autowired
-	public PetController(PetService petService, OwnerService ownerService) {
+	public PetController(PetService petService, OwnerService ownerService, OwnerController ownerController) {
 		this.petService = petService;
 		this.ownerService = ownerService;
+		this.ownerController = ownerController;
 	}
 
 	@ModelAttribute("types")
@@ -99,12 +107,28 @@ public class PetController {
 			return REDIRECT_TO_REQUESTS;
 		}
 	}
+	
+	private Owner loggedOwner() throws ForbiddenException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Owner owner = ownerService.findOwnerByUsername(username);
+        if (owner == null)
+            throw new ForbiddenException();
+        return owner;
+    }
 
 	@GetMapping(value = "/pets/{petId}/edit")
-	public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
+	public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) throws ForbiddenException {
+
 		Pet pet = this.petService.findPetById(petId);
+		if(!pet.getOwner().equals(loggedOwner())) {
+			model.addAttribute("message", "You're not allowed to edit a pet that's not yours");
+			model.addAttribute("messageType", "danger");
+			return this.ownerController.showOwner(pet.getOwner().getId(), model);
+		}
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+		 
 	}
 
 	/**
@@ -137,9 +161,15 @@ public class PetController {
 	}
 
 	@GetMapping(value = "/pets/{petId}/delete")
-	public String deletePet(@PathVariable("petId") int petId, Model model) {
+	public String deletePet(@PathVariable("petId") int petId, ModelMap model) throws ForbiddenException {
 		Pet pet = this.petService.findPetById(petId);
+		if(!pet.getOwner().equals(loggedOwner())) {
+			model.addAttribute("message", "You're not allowed to delete a pet that's not yours");
+			model.addAttribute("messageType", "danger");
+			return this.ownerController.showOwner(pet.getOwner().getId(), model);
+		}
 		petService.delete(pet);
+		
 		return REDIRECT_TO_REQUESTS;
 	}
 
