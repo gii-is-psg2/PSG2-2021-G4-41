@@ -54,11 +54,13 @@ public class PetController {
 
 	private final PetService petService;
 	private final OwnerService ownerService;
+	private final OwnerController ownerController;
 
 	@Autowired
-	public PetController(PetService petService, OwnerService ownerService) {
+	public PetController(PetService petService, OwnerService ownerService, OwnerController ownerController) {
 		this.petService = petService;
 		this.ownerService = ownerService;
+		this.ownerController = ownerController;
 	}
 
 	@ModelAttribute("types")
@@ -117,18 +119,16 @@ public class PetController {
 
 	@GetMapping(value = "/pets/{petId}/edit")
 	public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) throws ForbiddenException {
-		Owner owner = loggedOwner();
-		List<Pet> l = owner.getPets();
-		for(int i = 0; i<l.size(); i++) {
-			if (l.get(i).getId()==petId) {
-				Pet pet = this.petService.findPetById(petId);
-				model.put("pet", pet);
-				return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
-		 }
+
+		Pet pet = this.petService.findPetById(petId);
+		if(!pet.getOwner().equals(loggedOwner())) {
+			model.addAttribute("message", "You're not allowed to edit a pet that's not yours");
+			model.addAttribute("messageType", "danger");
+			return this.ownerController.showOwner(pet.getOwner().getId(), model);
 		}
-	
-		return REDIRECT_TO_REQUESTS;
-		
+		model.put("pet", pet);
+		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+		 
 	}
 
 	/**
@@ -161,9 +161,15 @@ public class PetController {
 	}
 
 	@GetMapping(value = "/pets/{petId}/delete")
-	public String deletePet(@PathVariable("petId") int petId, Model model) {
+	public String deletePet(@PathVariable("petId") int petId, ModelMap model) throws ForbiddenException {
 		Pet pet = this.petService.findPetById(petId);
+		if(!pet.getOwner().equals(loggedOwner())) {
+			model.addAttribute("message", "You're not allowed to delete a pet that's not yours");
+			model.addAttribute("messageType", "danger");
+			return this.ownerController.showOwner(pet.getOwner().getId(), model);
+		}
 		petService.delete(pet);
+		
 		return REDIRECT_TO_REQUESTS;
 	}
 
