@@ -31,36 +31,47 @@
 				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
 					title="find owners">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Owners</span>
+					<span>Dueños</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
 					title="veterinarians">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Vets</span>
+					<span>Veterinarios</span>
 				</petclinic:menuItem>
 				
+				<sec:authorize access="isAuthenticated()">
 				<petclinic:menuItem active="${name eq 'adoptions'}" url="/adoptions/requests"
 					title="adoptions">
 					<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
 					<span>Adopciones</span>
 				</petclinic:menuItem>
+				</sec:authorize>
 
 				<petclinic:menuItem active="${name eq 'causes'}" url="/causes"
 					title="causes">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Causas</span>
 				</petclinic:menuItem>
+
+				<sec:authorize access="isAuthenticated()">
+				<petclinic:menuItem active="${name eq 'hotel'}" url="/hotel"
+					title="hotel">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					<span>Hotel</span>
+				</petclinic:menuItem>
+				</sec:authorize>
+				
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/users/new" />">Register</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar sesión</a></li>
+					<li><a href="<c:url value="/users/new" />">Registrarse</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>

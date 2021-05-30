@@ -32,6 +32,7 @@
                 <div class="control-group">
                     <petclinic:selectField name="type" label="Type " names="${types}" size="5"/>
                 </div>
+                <petclinic:inputField label="Enlace de imagen" name="foto"/>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

@@ -16,27 +16,10 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${roomBooking['new']}">New </c:if>Room Bookings</h2>
-
-        <b>Mascota</b>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Fecha de nacimiento</th>
-                <th>Tipo</th>
-                <th>Owner</th>
-            </tr>
-            </thead>
-            <tr>
-                <td><c:out value="${roomBooking.pet.name}"/></td>
-                <td><petclinic:localDate date="${roomBooking.pet.birthDate}" pattern="yyyy/MM/dd"/></td>
-                <td><c:out value="${roomBooking.pet.type.name}"/></td>
-                <td><c:out value="${roomBooking.pet.owner.firstName} ${roomBooking.pet.owner.lastName}"/></td>
-            </tr>
-        </table>
+        <h2>Reserva una "room" para tu ${pet.type.name} ${" "} ${pet.name}</h2>
 
         <form:form modelAttribute="roomBooking" class="form-horizontal">
+        <br>
             <div class="form-group has-feedback">
                 <petclinic:inputField label="Check In Date" name="checkIn"/>
                 <petclinic:inputField label="Check Out Date" name="checkOut"/>
