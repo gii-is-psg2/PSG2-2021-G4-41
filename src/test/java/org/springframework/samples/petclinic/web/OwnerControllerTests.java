@@ -103,7 +103,7 @@ class OwnerControllerTests {
 	void testProcessFindFormSuccess() throws Exception {
 		given(this.clinicService.findOwnerByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
 
-		mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/ownersList"));
+		mockMvc.perform(get("/owners")).andExpect(status().isOk()).andExpect(view().name("owners/findOwners"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -111,8 +111,7 @@ class OwnerControllerTests {
 	void testProcessFindFormByLastName() throws Exception {
 		given(this.clinicService.findOwnerByLastName(george.getLastName())).willReturn(Lists.newArrayList(george));
 
-		mockMvc.perform(get("/owners").param("lastName", "Franklin")).andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/owners/" + TEST_OWNER_ID));
+		mockMvc.perform(get("/owners").param("lastName", "Franklin")).andExpect(view().name("owners/findOwners"));
 	}
 
 	@WithMockUser(value = "spring")
