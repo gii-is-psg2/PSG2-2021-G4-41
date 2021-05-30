@@ -36,6 +36,7 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -59,18 +60,29 @@ class PetControllerTests {
 
 	@MockBean
 	private OwnerService ownerService;
+	
+	@MockBean
+	private OwnerController ownerController;
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@BeforeEach
 	void setup() {
+		Pet p = new Pet();
 		PetType cat = new PetType();
 		cat.setId(3);
 		cat.setName("hamster");
+		Owner o = new Owner();
+		User u = new User();
+		u.setUsername("prueba");
+		o.setUser(u);
+		o.addPet(p);
+		p.setOwner(o);
+		given(this.ownerService.findOwnerByUsername("prueba")).willReturn(o);
 		given(this.petService.findPetTypes()).willReturn(Lists.newArrayList(cat));
-		given(this.ownerService.findOwnerById(TEST_OWNER_ID)).willReturn(new Owner());
-		given(this.petService.findPetById(TEST_PET_ID)).willReturn(new Pet());
+		given(this.ownerService.findOwnerById(TEST_OWNER_ID)).willReturn(o);
+		given(this.petService.findPetById(TEST_PET_ID)).willReturn(p);
 	}
 
 	@WithMockUser(value = "spring")
@@ -97,7 +109,7 @@ class PetControllerTests {
 				.andExpect(status().isOk()).andExpect(view().name("pets/createOrUpdatePetForm"));
 	}
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(value = "spring", username = "prueba")
 	@Test
 	void testInitUpdateForm() throws Exception {
 		mockMvc.perform(get("/owners/{ownerId}/pets/{petId}/edit", TEST_OWNER_ID, TEST_PET_ID))
